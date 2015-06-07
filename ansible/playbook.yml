@@ -70,6 +70,8 @@
         - Gemfile
         - Gemfile.lock
         - config.ru
+      notify:
+        - Restart Web hooks receiver
     - name: Install packages for Web hooks receiver
       apt: name={{ item }}
       with_items:
@@ -203,6 +205,12 @@
         - Restart Postfix
 
   handlers:
+    - name: Restart Web hooks receiver
+      file:
+        path=/home/{{ web_hooks_receiver_user }}/web-hooks-receiver/tmp/restart.txt
+        state=touch
+        owner={{ web_hooks_receiver_user }}
+        group={{ web_hooks_receiver_user }}
     - name: Reload systemd
       command: systemctl daemon-reload
     - name: Restart GitHub event watcher
