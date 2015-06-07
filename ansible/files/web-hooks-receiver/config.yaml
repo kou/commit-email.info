@@ -1,0 +1,16 @@
+mirrors_directory: /home/mailer/web-hooks-receiver/mirrors
+git_commit_mailer: bin/git-commit-mailer
+send_per_to: true
+add_html: true
+to:
+  - mailer@commit-email.info
+error_to:
+  - mailer@clear-code.com
+exception_notifier:
+  subject_label: "[commit-email]"
+sender: null@commit-email.info
+sleep_per_mail: 1
+domains:
+  github.com: &github
+    owners:
+  api.github.com: *github

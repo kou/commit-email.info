@@ -1,0 +1,38 @@
+# -*- mode: ruby -*-
+domain = "commit-email.info"
+ml_domain = "ml.#{domain}"
+Config = {
+  :port => 10025,
+  :user => "list",
+  :group => "list",
+  :bind_address => "127.0.0.1",
+
+  :smtp_host => "127.0.0.1",
+  :domain => ml_domain,
+  :postmaster => "postmaster@#{domain}",
+  :info_url => "",
+
+  :data_dir => '/var/lib/quickml',
+  :pid_file => '/var/run/quickml/quickml.pid',
+  :log_file => '/var/log/quickml/quickml-log',
+
+  :verbose_mode => true,
+  :max_members => 1024,
+  :max_mail_length => 1 * 1024 * 1024,
+  :ml_life_time => 86400 * 31,
+  :ml_alert_time => 86400 * 30,
+  :auto_unsubscribe_count => 5,
+
+  :sweep_interval => 3600,
+  :max_threads => 10,
+  :timeout => 120,
+  :use_qmail_verp => false,
+
+  :confirm_ml_creation => false, # for confirming ML creation.
+
+  :message_catalog => nil,  # for English messages
+  # :message_catalog => '/usr/share/quickml/messages.ja', # for Japanese messages
+  # :authorized_creators_list => '/etc/quickml/authorized_creators',
+  # :distribute_address => "dist@#{domain}",
+  # :report_address => "notify@#{domain}"
+}

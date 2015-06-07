@@ -1,0 +1,160 @@
+- hosts: servers
+  sudo: yes
+  vars:
+    user_name: mailer
+    ruby_api_version: 2.1.0
+    passenger_version: 5.0.9
+  tasks:
+    # Base
+    - name: Upgrade packages
+      apt:
+        update_cache=yes
+        cache_valid_time=3600
+        upgrade=safe
+    - name: Install base packages
+      apt: name={{ item }}
+      with_items:
+        - apt-listchanges
+        - vim
+        - zsh
+        - git
+        - lv
+        - acpid
+        - ruby
+        - ruby-dev
+    - name: Use VIM as the default editor
+      command: update-alternatives --set editor /usr/bin/vim.basic
+    - name: Use e-mail for apt-listchanges
+      copy:
+        src=files/listchanges.conf
+        dest=/etc/apt/listchanges.conf
+    - name: Install Groonga APT repository
+      apt_repository:
+        repo="deb http://packages.groonga.org/debian/ jessie main"
+    - name: Install GPG key for Groonga APT repository
+      apt: name=groonga-keyring force=yes
+      register: groonga_keyring
+    - name: Force to update APT cache
+      apt: update=yes
+      when: groonga_keyring.changed
+    - name: Install libgroonga-dev
+      apt: name=libgroonga-dev
+    - name: Install Bundler
+      gem: name=bundler user_install=false
+
+    # Web hooks receiver
+    - name: Create user for Web hooks receiver
+      user: name={{ user_name }}
+    - name: Put ~{{ user_name }}/.forward
+      copy:
+        content="root"
+        dest=~{{ user_name }}/.forward
+        owner={{ user_name }}
+        group={{ user_name }}
+    - name: Create directories
+      file:
+        path=~{{ user_name }}/{{ item }}
+        state=directory
+        owner={{ user_name }}
+        group={{ user_name }}
+      with_items:
+        - web-hooks-receiver/
+    - name: Put configuration files
+      copy:
+        src=files/web-hooks-receiver/{{ item }}
+        dest=~{{ user_name }}/web-hooks-receiver/{{ item }}
+      with_items:
+        - config.yaml
+        - Gemfile
+        - Gemfile.lock
+        - config.ru
+    - name: Update gems
+      shell: sudo -u mailer -H bundle install --deployment --binstubs
+      args:
+        chdir: ~{{ user_name }}/web-hooks-receiver/
+
+    # Apache
+    - name: Install Apache and related packages
+      apt: name={{ item }}
+      with_items:
+        - apache2
+        - apache2-dev
+        - libapr1-dev
+        - libaprutil1-dev
+        - libcurl4-openssl-dev
+        - libssl-dev
+    - name: Install Passenger
+      gem: name=passenger version={{ passenger_version }} user_install=false
+      register: passenger
+    - name: Build Passenger
+      command: sudo -H passenger-install-apache2-module --languages ruby --auto
+      when: passenger.changed
+    - name: Put Passenger configuration files
+      template:
+        src=files/apache/{{ item }}
+        dest=/etc/apache2/mods-available/{{ item }}
+      with_items:
+        - passenger.conf
+        - passenger.load
+    - name: Enable Passenger
+      command: a2enmod passenger
+    - name: Put Apache configuration file
+      template:
+        src=files/apache/web-hooks-receiver.commit-email.info.conf
+        dest=/etc/apache2/sites-available/web-hooks-receiver.commit-email.info.conf
+    - name: Enable our Apache configuration
+      command: a2ensite web-hooks-receiver.commit-email.info
+    - name: Disable default Apache configuration
+      command: a2dissite 000-default
+      notify:
+        - Restart Apache
+
+    # QuickML
+    - name: Install QuickML
+      apt: name=quickml
+    - name: Put QuickML configuration
+      copy:
+        src=files/quickml/quickmlrc
+        dest=/etc/quickml/quickmlrc
+      notify:
+        - Restart QuickML
+
+    # Postfix
+    - name: Install Postfix
+      apt: name=postfix
+    - name: Set /etc/aliases
+      copy:
+        src=files/aliases
+        dest=/etc/aliases
+      notify:
+        - Update /etc/aliases
+    - name: Set /etc/mailname
+      copy:
+        content="commit-email.info"
+        dest=/etc/mailname
+    - name: Put /etc/postfix/transport_maps
+      copy:
+        src=files/postfix/transport_maps
+        dest=/etc/postfix/main.cf
+    - name: Put Postfix configuration
+      copy:
+        src=files/postfix/{{ item }}
+        dest=/etc/postfix/{{ item }}
+      with_items:
+        - transport_maps
+        - main.cf
+      notify:
+        - Update /etc/postfix/transport_maps
+        - Restart Postfix
+
+  handlers:
+    - name: Restart Apache
+      service: name=apache2 state=restarted
+    - name: Restart QuickML
+      service: name=quickml state=restarted
+    - name: Update /etc/aliases
+      command: postalias /etc/aliases
+    - name: Update /etc/postfix/transport_maps
+      command: postmap /etc/postfix/transport_maps
+    - name: Restart Postfix
+      service: name=postfix state=restarted

@@ -1,0 +1,5 @@
+source "https://rubygems.org"
+
+gem "git-commit-mailer", git: "https://github.com/clear-code/git-commit-mailer.git"
+gem "github-web-hooks-receiver", git: "https://github.com/clear-code/github-web-hooks-receiver.git"
+gem "racknga"
