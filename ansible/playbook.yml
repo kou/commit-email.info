@@ -59,6 +59,7 @@
       with_items:
         - web-hooks-receiver/
         - web-hooks-receiver/public/
+        - web-hooks-receiver/tmp/
     - name: Put configuration files
       copy:
         src=files/web-hooks-receiver/{{ item }}
