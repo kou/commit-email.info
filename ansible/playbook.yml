@@ -40,7 +40,7 @@
     - name: Install libgroonga-dev
       apt: name=libgroonga-dev
     - name: Install Bundler
-      gem: name=bundler user_install=false
+      gem: name=bundler user_install=no
 
     # Web hooks receiver
     - name: Create user for Web hooks receiver
@@ -84,7 +84,7 @@
         - libcurl4-openssl-dev
         - libssl-dev
     - name: Install Passenger
-      gem: name=passenger version={{ passenger_version }} user_install=false
+      gem: name=passenger version={{ passenger_version }} user_install=no
       register: passenger
     - name: Build Passenger
       command: sudo -H passenger-install-apache2-module --languages ruby --auto
