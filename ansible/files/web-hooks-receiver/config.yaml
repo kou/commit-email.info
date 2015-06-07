@@ -9,6 +9,7 @@ error_to:
 exception_notifier:
   subject_label: "[commit-email]"
 sender: null@commit-email.info
+from: null@commit-email.info
 sleep_per_mail: 1
 domains:
   github.com: &github
