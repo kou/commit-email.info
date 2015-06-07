@@ -1,0 +1,13 @@
+[Unit]
+Description=GitHub event watcher
+Wants=network-online.target
+
+[Service]
+Type=forking
+User={{ github_event_watcher_user }}
+Group={{ github_event_watcher_user }}
+WorkingDirectory=/home/{{ github_event_watcher_user }}/github-event-watcher/
+ExecStart=/home/{{ github_event_watcher_user }}/github-event-watcher/bin/github-pull-push-events
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,18 @@
+GIT
+  remote: https://github.com/clear-code/github-event-watcher.git
+  revision: 743d092c05b55115267c1b62622728402f23d0a5
+  specs:
+    github-event-watcher (1.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  github-event-watcher!
+
+BUNDLED WITH
+   1.10.3

@@ -2,6 +2,7 @@
   sudo: yes
   vars:
     web_hooks_receiver_user: mailer
+    github_event_watcher_user: watcher
     ruby_api_version: 2.1.0
     passenger_version: 5.0.9
   tasks:
@@ -81,6 +82,47 @@
       args:
         chdir: ~{{ web_hooks_receiver_user }}/web-hooks-receiver/
 
+    # GitHub event watcher
+    - name: Create user for GitHub event watcher
+      user: name={{ github_event_watcher_user }}
+    - name: Put ~{{ github_event_watcher_user }}/.forward
+      copy:
+        content="root"
+        dest=~{{ github_event_watcher_user }}/.forward
+        owner={{ github_event_watcher_user }}
+        group={{ github_event_watcher_user }}
+    - name: Create directories
+      file:
+        path=~{{ github_event_watcher_user }}/{{ item }}
+        state=directory
+        owner={{ github_event_watcher_user }}
+        group={{ github_event_watcher_user }}
+      with_items:
+        - github-event-watcher/
+    - name: Put configuration files
+      copy:
+        src=files/github-event-watcher/{{ item }}
+        dest=~{{ github_event_watcher_user }}/github-event-watcher/{{ item }}
+        owner={{ github_event_watcher_user }}
+        group={{ github_event_watcher_user }}
+      with_items:
+        - config.yaml
+        - Gemfile
+        - Gemfile.lock
+    - name: Update gems
+      shell: sudo -u {{ github_event_watcher_user }} -H bundle install --deployment --binstubs
+      args:
+        chdir: ~{{ github_event_watcher_user }}/github-event-watcher/
+      notify:
+        - Restart GitHub event watcher
+    - name: Install .service
+      template:
+        src=files/github-event-watcher/github-event-watcher.service
+        dest=/lib/systemd/system/github-event-watcher.service
+      notify:
+        - Reload systemd
+        - Restart GitHub event watcher
+
     # Apache
     - name: Install Apache and related packages
       apt: name={{ item }}
@@ -156,6 +198,10 @@
         - Restart Postfix
 
   handlers:
+    - name: Reload systemd
+      command: systemctl daemon-reload
+    - name: Restart GitHub event watcher
+      service: name=github-event-watcher state=restarted
     - name: Restart Apache
       service: name=apache2 state=restarted
     - name: Restart QuickML
