@@ -116,6 +116,10 @@
         chdir: ~{{ github_event_watcher_user }}/github-event-watcher/
       notify:
         - Restart GitHub event watcher
+    - name: Put logrotate configuraition
+      template:
+        src=files/github-event-watcher/logrotate/github-event-watcher
+        dest=/etc/logrotate.d/github-event-watcher
     - name: Install .service
       template:
         src=files/github-event-watcher/github-event-watcher.service

@@ -1,0 +1,8 @@
+/home/{{ github_event_watcher_user }}/github-event-watcher/var/log/*.log {
+  rotate 31
+  daily
+  compress
+  postrotate
+    /usr/sbin/service github-event-watcher start
+  endscript
+}
