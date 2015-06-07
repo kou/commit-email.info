@@ -10,4 +10,6 @@ ftp: root
 abuse: root
 noc: root
 security: root
+
 root: kou
+null: /dev/null
