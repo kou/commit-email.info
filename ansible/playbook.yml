@@ -35,7 +35,7 @@
       apt: name=groonga-keyring force=yes
       register: groonga_keyring
     - name: Force to update APT cache
-      apt: update=yes
+      apt: update_cache=yes
       when: groonga_keyring.changed
     - name: Install libgroonga-dev
       apt: name=libgroonga-dev
