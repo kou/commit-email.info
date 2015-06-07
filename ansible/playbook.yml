@@ -1,7 +1,7 @@
 - hosts: servers
   sudo: yes
   vars:
-    user_name: mailer
+    web_hooks_receiver_user: mailer
     ruby_api_version: 2.1.0
     passenger_version: 5.0.9
   tasks:
@@ -41,28 +41,28 @@
 
     # Web hooks receiver
     - name: Create user for Web hooks receiver
-      user: name={{ user_name }}
-    - name: Put ~{{ user_name }}/.forward
+      user: name={{ web_hooks_receiver_user }}
+    - name: Put ~{{ web_hooks_receiver_user }}/.forward
       copy:
         content="root"
-        dest=~{{ user_name }}/.forward
-        owner={{ user_name }}
-        group={{ user_name }}
+        dest=~{{ web_hooks_receiver_user }}/.forward
+        owner={{ web_hooks_receiver_user }}
+        group={{ web_hooks_receiver_user }}
     - name: Create directories
       file:
-        path=~{{ user_name }}/{{ item }}
+        path=~{{ web_hooks_receiver_user }}/{{ item }}
         state=directory
-        owner={{ user_name }}
-        group={{ user_name }}
+        owner={{ web_hooks_receiver_user }}
+        group={{ web_hooks_receiver_user }}
       with_items:
         - web-hooks-receiver/
         - web-hooks-receiver/public/
     - name: Put configuration files
       copy:
         src=files/web-hooks-receiver/{{ item }}
-        dest=~{{ user_name }}/web-hooks-receiver/{{ item }}
-        owner={{ user_name }}
-        group={{ user_name }}
+        dest=~{{ web_hooks_receiver_user }}/web-hooks-receiver/{{ item }}
+        owner={{ web_hooks_receiver_user }}
+        group={{ web_hooks_receiver_user }}
       with_items:
         - config.yaml
         - Gemfile
@@ -79,7 +79,7 @@
     - name: Update gems
       shell: sudo -u mailer -H bundle install --deployment --binstubs
       args:
-        chdir: ~{{ user_name }}/web-hooks-receiver/
+        chdir: ~{{ web_hooks_receiver_user }}/web-hooks-receiver/
 
     # Apache
     - name: Install Apache and related packages
