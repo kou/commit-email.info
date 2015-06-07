@@ -21,7 +21,6 @@
         - lv
         - acpid
         - ruby
-        - ruby-dev
     - name: Use VIM as the default editor
       command: update-alternatives --set editor /usr/bin/vim.basic
     - name: Use e-mail for apt-listchanges
@@ -37,8 +36,6 @@
     - name: Force to update APT cache
       apt: update_cache=yes
       when: groonga_keyring.changed
-    - name: Install libgroonga-dev
-      apt: name=libgroonga-dev
     - name: Install Bundler
       gem: name=bundler user_install=no
 
@@ -68,6 +65,14 @@
         - Gemfile
         - Gemfile.lock
         - config.ru
+    - name: Install packages for Web hooks receiver
+      apt: name={{ item }}
+      with_items:
+        - gcc
+        - make
+        - ruby-dev
+        - libgroonga-dev
+        - libffi-dev
     - name: Update gems
       shell: sudo -u mailer -H bundle install --deployment --binstubs
       args:
