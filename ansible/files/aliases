@@ -11,5 +11,5 @@ abuse: root
 noc: root
 security: root
 
-root: kou
+root: {{ admin_user }}
 null: /dev/null
