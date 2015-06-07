@@ -13,6 +13,11 @@ sleep_per_mail: 1
 domains:
   github.com: &github
     owners:
+      ruby:
+        repositories:
+          ruby:
+            to:
+              - ruby@ml.commit-email.info
       mruby:
         to:
           - mruby@ml.commit-email.info
