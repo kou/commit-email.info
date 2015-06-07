@@ -56,10 +56,13 @@
         group={{ user_name }}
       with_items:
         - web-hooks-receiver/
+        - web-hooks-receiver/public/
     - name: Put configuration files
       copy:
         src=files/web-hooks-receiver/{{ item }}
         dest=~{{ user_name }}/web-hooks-receiver/{{ item }}
+        owner={{ user_name }}
+        group={{ user_name }}
       with_items:
         - config.yaml
         - Gemfile
