@@ -3,7 +3,6 @@ Description=GitHub event watcher
 Wants=network-online.target
 
 [Service]
-Type=forking
 User={{ github_event_watcher_user }}
 Group={{ github_event_watcher_user }}
 WorkingDirectory=/home/{{ github_event_watcher_user }}/github-event-watcher/
