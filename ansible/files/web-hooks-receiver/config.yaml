@@ -13,4 +13,17 @@ sleep_per_mail: 1
 domains:
   github.com: &github
     owners:
+      mruby:
+        to:
+          - mruby@ml.commit-email.info
+      MariaDB:
+        repositories:
+          server:
+            to:
+              - mariadb-server@ml.commit-email.info
+      apache:
+        repositories:
+          spark:
+            to:
+              - apache-spark@ml.commit-email.info
   api.github.com: *github
