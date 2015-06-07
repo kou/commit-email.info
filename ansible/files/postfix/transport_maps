@@ -1,1 +1,1 @@
-ml.commit-email.info smtp:[127.0.0.5]:10025
+ml.commit-email.info smtp:[127.0.0.1]:10025
