@@ -3,6 +3,6 @@
   daily
   compress
   postrotate
-    /usr/sbin/service github-event-watcher start
+    /usr/sbin/service github-event-watcher restart
   endscript
 }
