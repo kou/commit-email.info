@@ -77,7 +77,7 @@
         - libgroonga-dev
         - libffi-dev
     - name: Update gems
-      shell: sudo -u mailer -H bundle install --deployment --binstubs
+      shell: sudo -u {{ web_hooks_receiver_user }} -H bundle install --deployment --binstubs
       args:
         chdir: ~{{ web_hooks_receiver_user }}/web-hooks-receiver/
 
