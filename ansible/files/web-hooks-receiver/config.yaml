@@ -32,4 +32,9 @@ domains:
           spark:
             to:
               - apache-spark@ml.commit-email.info
+      kou:
+        repositories:
+          commit-email.info:
+            to:
+              - commit-email-info@ml.commit-email.info
   api.github.com: *github
