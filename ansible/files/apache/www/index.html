@@ -67,6 +67,7 @@ Subject: Unsubscribe
 
     <section id="repositories">
       <h2>Repositories</h2>
+      <p>If you can't find a repository what you want to follow, <a href="request-new-repository">request a new repository</a>.</p>
       <table>
         <thead>
           <tr>
@@ -103,6 +104,15 @@ Subject: Unsubscribe
           </tr>
         </tbody>
       </table>
+    </section>
+
+    <section id="request-new-repository">
+      <h2>Request a new repository</h2>
+      <ol>
+        <li>Add a repository and mailing list address to <a href="https://github.com/kou/commit-email.info/blob/master/ansible/files/web-hooks-receiver/config.yaml">web-hooks-receiver/config.yaml at kou/commit-email.info</a> and make it pull request</li>
+        <li>If you are a owner of the repository, add http://web-hooks-receiver.commit-email.info/ to Webhooks of the repository</li>
+        <li>If you aren't a owner of the repository, add a repository to <a href="https://github.com/kou/commit-email.info/blob/master/ansible/files/github-event-watcher/config.yaml">github-event-watcher/config.yaml at kou/commit-email.info<a></li>
+      </ol>
     </section>
   </body>
 </html>
