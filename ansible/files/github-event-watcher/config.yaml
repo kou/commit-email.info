@@ -3,5 +3,4 @@ repositories:
   - MariaDB/server
   - apache/spark
   - ruby/ruby
-  - kou/commit-email.info
 webhook-end-point: http://web-hooks-receiver.commit-email.info/
