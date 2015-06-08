@@ -8,9 +8,101 @@
   </head>
   <body>
     <h1>Commit Email as a Service</h1>
-    <section>
+
+    <section id="about">
       <h2>About</h2>
-      <p>Commit Email as a Service sends an email for one commit. The email includes colorized diff.</p>
+      <ol>
+        <li>Commit</li>
+        <li>Push</li>
+        <li>Share</li>
+      </ol>
+    </section>
+
+    <section id="how-to-use">
+      <h2>How to use</h2>
+      <ol>
+        <li>Find a repository from <a href="#repositories">list</a></li>
+        <li><a href="#subscribe">Subscribe</a> to mailing list</li>
+      </ol>
+
+      <section id="subscribe">
+        <h3>How to subscribe</h3>
+        <p>Send an email like the following:</p>
+        <pre>
+To: ${MAILING_LIST_NAME}@ml.commit-email.info
+Cc: null@commit-email.info
+Subject: Subscribe
+--
+Subscribe
+        </pre>
+
+        <p>Here is an email to subscribe to mailing list for Ruby's commit email.</p>
+        <pre>
+To: ruby@ml.commit-email.info
+Cc: null@commit-email.info
+Subject: Subscribe
+--
+Subscribe
+        </pre>
+      </section>
+
+      <section id="unsubscribe">
+        <h3>How to unsubscribe</h3>
+        <p>Send an email like the following:</p>
+        <pre>
+To: ${MAILING_LIST_NAME}@ml.commit-email.info
+Subject: Unsubscribe
+--
+        </pre>
+        <p>Body must be empty. You can't use HTML mail because HTML mail has body event when it has empty content.</p>
+
+        <p>Here is an email to unsubscribe from mailing list for Ruby's commit email.</p>
+        <pre>
+To: ruby@ml.commit-email.info
+Subject: Unsubscribe
+--
+        </pre>
+      </section>
+    </section>
+
+    <section id="repositories">
+      <h2>Repositories</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Owner</th>
+            <th>Repository</th>
+            <th>Mailing list</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>kou</td>
+            <td>commit-email.info</td>
+            <td>commit-email-info@ml.commit-email.info</td>
+          </tr>
+          <tr>
+            <td>ruby</td>
+            <td>ruby</td>
+            <td>ruby@ml.commit-email.info</td>
+          </tr>
+          <tr>
+            <td>mruby</td>
+            <td>mruby</td>
+            <td>mruby@ml.commit-email.info</td>
+          </tr>
+          <tr>
+            <td>MariaDB</td>
+            <td>server</td>
+            <td>mariadb-server@ml.commit-email.info</td>
+          </tr>
+          <tr>
+            <td>apache</td>
+            <td>spark</td>
+            <td>apache-spark@ml.commit-email.info</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </body>
 </html>
