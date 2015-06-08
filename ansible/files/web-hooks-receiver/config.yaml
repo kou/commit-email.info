@@ -5,7 +5,7 @@ add_html: true
 to:
   - mailer@commit-email.info
 error_to:
-  - mailer@clear-code.com
+  - mailer@commit-email.info
 exception_notifier:
   subject_label: "[commit-email]"
 sender: null@commit-email.info
