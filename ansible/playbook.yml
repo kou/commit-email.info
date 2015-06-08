@@ -158,12 +158,25 @@
       command: a2enmod passenger
     - name: Put Apache configuration file
       template:
-        src=files/apache/web-hooks-receiver.commit-email.info.conf
-        dest=/etc/apache2/sites-available/web-hooks-receiver.commit-email.info.conf
-    - name: Enable our Apache configuration
-      command: a2ensite web-hooks-receiver.commit-email.info
-    - name: Disable default Apache configuration
-      command: a2dissite 000-default
+        src=files/apache/{{ item }}
+        dest=/etc/apache2/sites-available/{{ item }}
+      with_items:
+        - 000-default.conf
+        - www.commit-email.info.conf
+        - web-hooks-receiver.commit-email.info.conf
+    - name: Put www.commit-email.info content
+      template:
+        src=files/apache/www/{{ item }}
+        dest=/var/www/html/{{ item }}
+      with_items:
+        - index.html
+        - style.css
+    - name: Enable our Apache configurations
+      command: a2ensite {{ item }}
+      with_items:
+        - 000-default
+        - www.commit-email.info
+        - web-hooks-receiver.commit-email.info
       notify:
         - Restart Apache
 
