@@ -46,4 +46,6 @@ domains:
           ruby:
             to:
               - ruby@ml.commit-email.info
+      taiyaki:
+        to: taiyaki@ml.commit-email.info
   api.github.com: *github
