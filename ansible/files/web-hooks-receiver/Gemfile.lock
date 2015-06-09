@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: https://github.com/clear-code/github-web-hooks-receiver.git
-  revision: b7370f8b4e39e6d03a00c4ff6783c6c63ac9baf5
+  revision: a1a2ad13143d1325e3f066c87d0c40b2e388ea30
   specs:
     github-web-hooks-receiver (1.0.0)
       rack
