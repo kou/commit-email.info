@@ -1,12 +1,12 @@
 GIT
   remote: https://github.com/clear-code/git-commit-mailer.git
-  revision: 414be7e8989e870828db7fcf092420e19fd5b7e0
+  revision: 453787f064dd14f4c762e334501126c13e1ee8c8
   specs:
-    git-commit-mailer (1.0.2)
+    git-commit-mailer (1.0.4)
 
 GIT
   remote: https://github.com/clear-code/github-web-hooks-receiver.git
-  revision: 5c917abee2d6b2663e38c0a96af728681d7ae1a5
+  revision: ff1a8ece77f09376dfdf301855dba613c6552ba7
   specs:
     github-web-hooks-receiver (1.0.0)
       rack
