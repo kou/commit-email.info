@@ -34,6 +34,11 @@ domains:
           mruby:
             to:
               - mruby@ml.commit-email.info
+      rails:
+        repositories:
+          rails:
+            to:
+              - rails@ml.commit-email.info
       ruby:
         repositories:
           ruby:

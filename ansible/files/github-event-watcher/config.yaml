@@ -2,5 +2,6 @@ repositories:
   - apache/spark
   - MariaDB/server
   - mruby/mruby
+  - rails/rails
   - ruby/ruby
 webhook-end-point: http://web-hooks-receiver.commit-email.info/
