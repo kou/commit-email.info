@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/clear-code/github-event-watcher.git
-  revision: 743d092c05b55115267c1b62622728402f23d0a5
+  revision: 68b2007b94f326034ae8ddc01f6fd41bfb62cd97
   specs:
     github-event-watcher (1.0.0)
 
