@@ -34,6 +34,8 @@ domains:
           mruby:
             to:
               - mruby@ml.commit-email.info
+      rabbit-shocker:
+        to: rabbit@ml.commit-email.info
       rails:
         repositories:
           rails:
