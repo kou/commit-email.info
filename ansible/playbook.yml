@@ -71,8 +71,7 @@
         - Gemfile
         - Gemfile.lock
         - config.ru
-      notify:
-        - Restart Web hooks receiver
+      register: web_hooks_receiver_config_files
     - name: Install packages for Web hooks receiver
       apt: name={{ item }}
       with_items:
@@ -85,6 +84,9 @@
       shell: sudo -u {{ web_hooks_receiver_user }} -H bundle install --deployment --binstubs
       args:
         chdir: ~{{ web_hooks_receiver_user }}/web-hooks-receiver/
+      notify:
+        - Restart Web hooks receiver
+      when: web_hooks_receiver_config_files.changed
 
     # GitHub event watcher
     - name: Create user for GitHub event watcher
@@ -113,12 +115,14 @@
         - config.yaml
         - Gemfile
         - Gemfile.lock
+      register: github_event_watcher_config_files
     - name: Update gems
       shell: sudo -u {{ github_event_watcher_user }} -H bundle install --deployment --binstubs
       args:
         chdir: ~{{ github_event_watcher_user }}/github-event-watcher/
       notify:
         - Restart GitHub event watcher
+      when: github_event_watcher_config_files.changed
     - name: Put logrotate configuraition
       template:
         src=files/github-event-watcher/logrotate/github-event-watcher
@@ -154,8 +158,10 @@
       with_items:
         - passenger.conf
         - passenger.load
+      register: passenger_config_files
     - name: Enable Passenger
       command: a2enmod passenger
+      when: passenger_config_files.changed
     - name: Put Apache configuration file
       template:
         src=files/apache/{{ item }}
@@ -164,6 +170,7 @@
         - 000-default.conf
         - www.commit-email.info.conf
         - web-hooks-receiver.commit-email.info.conf
+      register: apache_config_files
     - name: Put www.commit-email.info content
       template:
         src=files/apache/www/{{ item }}
@@ -179,6 +186,7 @@
         - web-hooks-receiver.commit-email.info
       notify:
         - Restart Apache
+      when: apache_config_files.changed
 
     # QuickML
     - name: Install QuickML
@@ -203,10 +211,6 @@
       copy:
         content="commit-email.info"
         dest=/etc/mailname
-    - name: Put /etc/postfix/transport_maps
-      copy:
-        src=files/postfix/transport_maps
-        dest=/etc/postfix/main.cf
     - name: Put Postfix configuration
       copy:
         src=files/postfix/{{ item }}
