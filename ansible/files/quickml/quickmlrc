@@ -19,8 +19,8 @@ Config = {
   :verbose_mode => true,
   :max_members => 1024,
   :max_mail_length => 1 * 1024 * 1024,
-  :ml_life_time => 86400 * 31,
-  :ml_alert_time => 86400 * 30,
+  :ml_life_time => 60 * 60 * 24 * 365,
+  :ml_alert_time => 60 * 60 * 24 * 364,
   :auto_unsubscribe_count => 5,
 
   :sweep_interval => 3600,
