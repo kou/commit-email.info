@@ -19,6 +19,9 @@ domains:
           spark:
             to:
               - apache-spark@ml.commit-email.info
+      fluent:
+        to:
+          - fluent@ml.commit-email.info
       kou:
         repositories:
           commit-email.info:
@@ -34,6 +37,9 @@ domains:
           mruby:
             to:
               - mruby@ml.commit-email.info
+      msgpack:
+        to:
+          - msgpack@ml.commit-email.info
       rabbit-shocker:
         to: rabbit@ml.commit-email.info
       rails:
