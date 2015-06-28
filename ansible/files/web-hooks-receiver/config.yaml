@@ -19,6 +19,14 @@ domains:
           spark:
             to:
               - apache-spark@ml.commit-email.info
+      clear-code:
+        repositories:
+          cutter:
+            to:
+              - cutter@ml.commit-email.info
+          pikzie:
+            to:
+              - pikzie@ml.commit-email.info
       fluent:
         to:
           - fluent@ml.commit-email.info
