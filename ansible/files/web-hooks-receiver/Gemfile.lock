@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: https://github.com/clear-code/github-web-hooks-receiver.git
-  revision: a1a2ad13143d1325e3f066c87d0c40b2e388ea30
+  revision: 59b807ebbb2293ad92fab34d56227b46efeb950f
   specs:
     github-web-hooks-receiver (1.0.0)
       rack
@@ -25,7 +25,7 @@ GEM
     io-like (0.3.0)
     json (1.8.3)
     pkg-config (1.1.6)
-    rack (1.6.1)
+    rack (1.6.4)
     racknga (0.9.3)
       rack
       rroonga
