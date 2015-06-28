@@ -20,11 +20,14 @@ domains:
             to:
               - apache-spark@ml.commit-email.info
       clear-code:
+        enabled: false
         repositories:
           cutter:
+            enabled: true
             to:
               - cutter@ml.commit-email.info
           pikzie:
+            enabled: true
             to:
               - pikzie@ml.commit-email.info
       fluent:
