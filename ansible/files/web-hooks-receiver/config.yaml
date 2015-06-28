@@ -3,7 +3,7 @@ git_commit_mailer: bin/git-commit-mailer
 send_per_to: true
 add_html: true
 to:
-  - mailer@commit-email.info
+  - unclassified@ml.commit-email.info
 error_to:
   - mailer@commit-email.info
 exception_notifier:
