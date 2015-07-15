@@ -58,6 +58,9 @@ domains:
           rails:
             to:
               - rails@ml.commit-email.info
+      rake-compiler:
+        to:
+          - rake-compiler@ml.commit-email.info
       ruby:
         repositories:
           ruby:
