@@ -20,7 +20,6 @@ domains:
             to:
               - apache-spark@ml.commit-email.info
       clear-code:
-        enabled: false
         to:
           - clear-code@ml.commit-email.info
         repositories:
