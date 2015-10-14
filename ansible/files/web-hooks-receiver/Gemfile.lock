@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/clear-code/git-commit-mailer.git
-  revision: 9173baa8c64a15e25909df79d2204ae03baa2388
+  revision: 84f5fc7399de9edb9f5fee9439b8a0611f7d2a19
   specs:
     git-commit-mailer (1.0.4)
       diff-lcs
