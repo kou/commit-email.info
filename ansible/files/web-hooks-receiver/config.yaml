@@ -19,6 +19,9 @@ domains:
           spark:
             to:
               - apache-spark@ml.commit-email.info
+      bm-sms:
+        to:
+          - bm-sms@ml.commit-email.info
       clear-code:
         to:
           - clear-code@ml.commit-email.info
