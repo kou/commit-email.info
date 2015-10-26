@@ -34,6 +34,9 @@ domains:
       fluent:
         to:
           - fluent@ml.commit-email.info
+      groonga:
+        to:
+          - groonga@ml.commit-email.info
       kou:
         repositories:
           commit-email.info:
@@ -44,6 +47,9 @@ domains:
           server:
             to:
               - mariadb-server@ml.commit-email.info
+      mroonga:
+        to:
+          - mroonga@ml.commit-email.info
       mruby:
         repositories:
           mruby:
