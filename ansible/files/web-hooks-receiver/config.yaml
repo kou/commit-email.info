@@ -61,6 +61,9 @@ domains:
       msgpack:
         to:
           - msgpack@ml.commit-email.info
+      pgroonga:
+        to:
+          - pgroonga@ml.commit-email.info
       piroor:
         to: piroor@ml.commit-email.info
       rabbit-shocker:
