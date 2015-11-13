@@ -76,6 +76,9 @@ domains:
       rake-compiler:
         to:
           - rake-compiler@ml.commit-email.info
+      ranguba:
+        to:
+          - ranguba@ml.commit-email.info
       rcairo:
         to:
           - rcairo@ml.commit-email.info
