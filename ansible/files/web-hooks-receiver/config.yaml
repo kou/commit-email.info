@@ -61,6 +61,9 @@ domains:
       msgpack:
         to:
           - msgpack@ml.commit-email.info
+      oss-gate:
+        to:
+          - oss-gate@ml.commit-email.info
       pgroonga:
         to:
           - pgroonga@ml.commit-email.info
