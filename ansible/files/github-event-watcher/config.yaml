@@ -4,4 +4,6 @@ repositories:
   - mruby/mruby
   - rails/rails
   - ruby/ruby
+  - greenplum-db/gpdb
+  - greenplum-db/greenplum-db.github.io
 webhook-end-point: http://web-hooks-receiver.commit-email.info/
