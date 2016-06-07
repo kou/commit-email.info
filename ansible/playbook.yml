@@ -81,7 +81,8 @@
         - libgroonga-dev
         - libffi-dev
     - name: Update gems
-      shell: sudo -u {{ web_hooks_receiver_user }} -H bundle install --deployment --binstubs
+      become_user: "{{ web_hooks_receiver_user }}"
+      shell: bundle install --deployment --binstubs
       args:
         chdir: ~{{ web_hooks_receiver_user }}/web-hooks-receiver/
       notify:
@@ -117,7 +118,8 @@
         - Gemfile.lock
       register: github_event_watcher_config_files
     - name: Update gems
-      shell: sudo -u {{ github_event_watcher_user }} -H bundle install --deployment --binstubs
+      become_user: "{{ github_event_watcher_user }}"
+      shell: bundle install --deployment --binstubs
       args:
         chdir: ~{{ github_event_watcher_user }}/github-event-watcher/
       notify:
@@ -149,7 +151,7 @@
       gem: name=passenger version={{ passenger_version }} user_install=no
       register: passenger
     - name: Build Passenger
-      command: sudo -H passenger-install-apache2-module --languages ruby --auto
+      command: passenger-install-apache2-module --languages ruby --auto
       when: passenger.changed
     - name: Put Passenger configuration files
       template:
