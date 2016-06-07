@@ -1,13 +1,13 @@
 GIT
   remote: https://github.com/clear-code/git-commit-mailer.git
-  revision: 84f5fc7399de9edb9f5fee9439b8a0611f7d2a19
+  revision: 6db47d2ba51e8fc8f0c194564e1461e5deec964b
   specs:
     git-commit-mailer (1.0.4)
       diff-lcs
 
 GIT
   remote: https://github.com/clear-code/github-web-hooks-receiver.git
-  revision: bd345e7cf431fa2a68d941a9194b0180a86c815b
+  revision: bca4274784d0cd5183ca758308830db647d680ca
   specs:
     github-web-hooks-receiver (1.0.0)
       rack
@@ -15,23 +15,25 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    archive-zip (0.7.0)
+    archive-zip (0.8.0)
       io-like (~> 0.3.0)
     diff-lcs (1.2.5)
     gqtp (1.0.6)
-    groonga-client (0.1.9)
+    groonga-client (0.2.5)
       gqtp (>= 1.0.4)
-      groonga-command (>= 1.0.8)
-    groonga-command (1.1.3)
+      groonga-command (>= 1.2.0)
+      hashie
+    groonga-command (1.2.0)
       json
+    hashie (3.4.4)
     io-like (0.3.0)
     json (1.8.3)
-    pkg-config (1.1.6)
+    pkg-config (1.1.7)
     rack (1.6.4)
     racknga (0.9.3)
       rack
       rroonga
-    rroonga (5.0.8)
+    rroonga (6.0.2)
       archive-zip
       groonga-client (>= 0.0.3)
       json
@@ -46,4 +48,4 @@ DEPENDENCIES
   racknga
 
 BUNDLED WITH
-   1.10.6
+   1.12.5
