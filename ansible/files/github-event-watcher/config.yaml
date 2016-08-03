@@ -6,4 +6,6 @@ repositories:
   - ruby/ruby
   - greenplum-db/gpdb
   - greenplum-db/greenplum-db.github.io
+  - mozilla-japan/meta-browser
+  - mozilla-japan/gecko-embedded
 webhook-end-point: http://web-hooks-receiver.commit-email.info/

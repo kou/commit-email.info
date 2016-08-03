@@ -53,6 +53,9 @@ domains:
           server:
             to:
               - mariadb-server@ml.commit-email.info
+      mozilla-japan:
+        to:
+          - mozilla-japan@ml.commit-email.info
       mroonga:
         to:
           - mroonga@ml.commit-email.info
