@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/clear-code/git-commit-mailer.git
-  revision: 6db47d2ba51e8fc8f0c194564e1461e5deec964b
+  revision: 6026ef22f15213d74be9a3ea3db5b83fed17a59b
   specs:
     git-commit-mailer (1.0.4)
       diff-lcs
@@ -19,21 +19,21 @@ GEM
       io-like (~> 0.3.0)
     diff-lcs (1.2.5)
     gqtp (1.0.6)
-    groonga-client (0.2.5)
+    groonga-client (0.2.7)
       gqtp (>= 1.0.4)
       groonga-command (>= 1.2.0)
       hashie
-    groonga-command (1.2.0)
+    groonga-command (1.2.7)
       json
     hashie (3.4.4)
     io-like (0.3.0)
-    json (1.8.3)
+    json (2.0.2)
     pkg-config (1.1.7)
-    rack (1.6.4)
+    rack (2.0.1)
     racknga (0.9.3)
       rack
       rroonga
-    rroonga (6.0.2)
+    rroonga (6.0.7)
       archive-zip
       groonga-client (>= 0.0.3)
       json
