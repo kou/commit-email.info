@@ -29,7 +29,7 @@ GEM
     io-like (0.3.0)
     json (2.0.2)
     pkg-config (1.1.7)
-    rack (2.0.1)
+    rack (1.6.4)
     racknga (0.9.3)
       rack
       rroonga
@@ -45,6 +45,7 @@ PLATFORMS
 DEPENDENCIES
   git-commit-mailer!
   github-web-hooks-receiver!
+  rack (< 2.0.0)
   racknga
 
 BUNDLED WITH
