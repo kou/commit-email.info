@@ -37,6 +37,9 @@ domains:
       fluent:
         to:
           - fluent@ml.commit-email.info
+      fluent-plugins-nursery:
+        to:
+          - fluent-plugins-nursery@ml.commit-email.info
       greenplum-db:
         to:
           - greenplum-db@ml.commit-email.info
