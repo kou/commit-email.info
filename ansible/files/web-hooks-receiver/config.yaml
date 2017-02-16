@@ -16,6 +16,9 @@ domains:
     owners:
       apache:
         repositories:
+          arrow:
+            to:
+              - apache-arrow@ml.commit-email.info
           spark:
             to:
               - apache-spark@ml.commit-email.info
