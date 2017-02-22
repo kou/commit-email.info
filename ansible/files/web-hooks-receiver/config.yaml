@@ -108,6 +108,11 @@ domains:
       rwiki:
         to:
           - rwiki@ml.commit-email.info
+      speee:
+        repositories:
+          webapp-revieee:
+            to:
+              - speee-webapp-revieee@ml.commit-email.info
       taiyaki:
         to: taiyaki@ml.commit-email.info
   api.github.com: *github
