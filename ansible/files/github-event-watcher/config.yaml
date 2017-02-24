@@ -5,8 +5,6 @@ repositories:
   - mruby/mruby
   - rails/rails
   - ruby/ruby
-  - greenplum-db/gpdb
-  - greenplum-db/greenplum-db.github.io
   - mozilla-japan/gecko-embedded
   - speee/webapp-revieee
 webhook-end-point: http://web-hooks-receiver.commit-email.info/
