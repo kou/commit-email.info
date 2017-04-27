@@ -94,6 +94,9 @@ domains:
       rcairo:
         to:
           - rcairo@ml.commit-email.info
+      red-data-tools:
+        to:
+          - red-data-tools@ml.commit-email.info
       rr:
         to:
           - rr@ml.commit-email.info
