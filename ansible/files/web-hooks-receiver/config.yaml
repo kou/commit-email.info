@@ -56,6 +56,9 @@ domains:
           server:
             to:
               - mariadb-server@ml.commit-email.info
+      milter-manager:
+        to:
+          - milter-manager@ml.commit-email.info
       mozilla-japan:
         to:
           - mozilla-japan@ml.commit-email.info
