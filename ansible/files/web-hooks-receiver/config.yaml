@@ -118,4 +118,6 @@ domains:
               - speee-webapp-revieee@ml.commit-email.info
       taiyaki:
         to: taiyaki@ml.commit-email.info
+      test-unit:
+        to: test-unit@ml.commit-email.info
   api.github.com: *github
