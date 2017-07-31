@@ -4,8 +4,8 @@
     admin_user: kou
     web_hooks_receiver_user: mailer
     github_event_watcher_user: watcher
-    ruby_api_version: 2.1.0
-    passenger_version: 5.0.9
+    ruby_api_version: 2.3.0
+    passenger_version: 5.1.6
   tasks:
     # Base
     - name: Upgrade packages
@@ -32,7 +32,7 @@
         dest=/etc/apt/listchanges.conf
     - name: Install Groonga APT repository
       apt_repository:
-        repo="deb http://packages.groonga.org/debian/ jessie main"
+        repo="deb http://packages.groonga.org/debian/ stretch main"
     - name: Install GPG key for Groonga APT repository
       apt: name=groonga-keyring force=yes
       register: groonga_keyring
