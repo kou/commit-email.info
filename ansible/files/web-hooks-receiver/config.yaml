@@ -59,9 +59,6 @@ domains:
       milter-manager:
         to:
           - milter-manager@ml.commit-email.info
-      webdino:
-        to:
-          - webdino@ml.commit-email.info
       mroonga:
         to:
           - mroonga@ml.commit-email.info
@@ -120,4 +117,7 @@ domains:
         to: taiyaki@ml.commit-email.info
       test-unit:
         to: test-unit@ml.commit-email.info
+      webdino:
+        to:
+          - webdino@ml.commit-email.info
   api.github.com: *github
