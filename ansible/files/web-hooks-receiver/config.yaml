@@ -59,9 +59,9 @@ domains:
       milter-manager:
         to:
           - milter-manager@ml.commit-email.info
-      mozilla-japan:
+      webdino:
         to:
-          - mozilla-japan@ml.commit-email.info
+          - webdino@ml.commit-email.info
       mroonga:
         to:
           - mroonga@ml.commit-email.info
