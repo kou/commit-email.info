@@ -1,5 +1,6 @@
 repositories:
   - apache/arrow
+  - apache/arrow-dist
   - apache/spark
   - MariaDB/server
   - mruby/mruby

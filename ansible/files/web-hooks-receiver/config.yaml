@@ -19,6 +19,9 @@ domains:
           arrow:
             to:
               - apache-arrow@ml.commit-email.info
+          arrow-dist:
+            to:
+              - apache-arrow@ml.commit-email.info
           spark:
             to:
               - apache-spark@ml.commit-email.info
