@@ -103,6 +103,9 @@ domains:
       rr:
         to:
           - rr@ml.commit-email.info
+      RubyData:
+        to:
+          - ruby-data@ml.commit-email.info
       ruby:
         repositories:
           ruby:
