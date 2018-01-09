@@ -17,6 +17,7 @@
       apt: name={{ item }}
       with_items:
         - apt-listchanges
+        - apt-transport-https
         - apticron
         - vim
         - zsh
@@ -32,9 +33,11 @@
         dest=/etc/apt/listchanges.conf
     - name: Install Groonga APT repository
       apt_repository:
-        repo="deb http://packages.groonga.org/debian/ stretch main"
+        repo: deb http://packages.groonga.org/debian/ stretch main
     - name: Install GPG key for Groonga APT repository
-      apt: name=groonga-keyring force=yes
+      apt:
+        name: groonga-keyring
+        force: yes
       register: groonga_keyring
     - name: Force to update APT cache
       apt: update_cache=yes
@@ -225,24 +228,86 @@
         - Update /etc/postfix/transport_maps
         - Restart Postfix
 
+    # milter manager
+    - name: Add GPG key for APT repository
+      apt_key:
+        url: https://packagecloud.io/milter-manager/repos/gpgkey
+    - name: Add APT repository for milter manager
+      apt_repository:
+        repo: deb https://packagecloud.io/milter-manager/repos/debian/ stretch main
+        filename: "milter-manager"
+    - name: Install milters
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - milter-manager
+        - milter-greylist
+    - name: Add milter-manager user to greylist group
+      user:
+        name: milter-manager
+        append: yes
+        groups:
+          - greylist
+          - postfix
+    - name: Configure milter-greylist
+      copy:
+        src: "{{ item }}"
+        dest: /{{ item }}
+      with_items:
+        - etc/milter-greylist/greylist.conf
+        - etc/default/milter-greylist
+      notify:
+        - Restart milter-greylist
+    - name: Create milter manager directory
+      file:
+        path: /var/spool/postfix/milter-manager/
+        state: directory
+        owner: milter-manager
+        group: postfix
+        mode: 0750
+    - name: Configure milter manager
+      copy:
+        src: "{{ item }}"
+        dest: /{{ item }}
+      with_items:
+        - etc/default/milter-manager
+      notify:
+        - Restart milter-manager
+
   handlers:
     - name: Restart Web hooks receiver
       file:
-        path=/home/{{ web_hooks_receiver_user }}/web-hooks-receiver/tmp/restart.txt
-        state=touch
-        owner={{ web_hooks_receiver_user }}
-        group={{ web_hooks_receiver_user }}
+        path: /home/{{ web_hooks_receiver_user }}/web-hooks-receiver/tmp/restart.txt
+        state: touch
+        owner: "{{ web_hooks_receiver_user }}"
+        group: "{{ web_hooks_receiver_user }}"
     - name: Reload systemd
       command: systemctl daemon-reload
     - name: Restart GitHub event watcher
-      service: name=github-event-watcher state=restarted
+      service:
+        name: github-event-watcher
+        state: restarted
     - name: Restart Apache
-      service: name=apache2 state=restarted
+      service:
+        name: apache2
+        state: restarted
     - name: Restart QuickML
-      service: name=quickml state=restarted
+      service:
+        name: quickml
+        state: restarted
     - name: Update /etc/aliases
       command: postalias /etc/aliases
     - name: Update /etc/postfix/transport_maps
       command: postmap /etc/postfix/transport_maps
     - name: Restart Postfix
-      service: name=postfix state=restarted
+      service:
+        name: postfix
+        state: restarted
+    - name: Restart milter-greylist
+      service:
+        name: milter-greylist
+        state: restarted
+    - name: Restart milter manager
+      service:
+        name: milter-manager
+        state: restarted
