@@ -219,11 +219,11 @@
         dest=/etc/mailname
     - name: Put Postfix configuration
       copy:
-        src=files/postfix/{{ item }}
-        dest=/etc/postfix/{{ item }}
+        src: "{{ item }}"
+        dest: /{{ item }}
       with_items:
-        - transport_maps
-        - main.cf
+        - etc/postfix/transport_maps
+        - etc/postfix/main.cf
       notify:
         - Update /etc/postfix/transport_maps
         - Restart Postfix
