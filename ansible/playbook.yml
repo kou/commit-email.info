@@ -272,7 +272,7 @@
       with_items:
         - etc/default/milter-manager
       notify:
-        - Restart milter-manager
+        - Restart milter manager
 
   handlers:
     - name: Restart Web hooks receiver
