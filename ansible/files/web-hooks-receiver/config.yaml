@@ -129,6 +129,8 @@ domains:
         to: taiyaki@ml.commit-email.info
       test-unit:
         to: test-unit@ml.commit-email.info
+      uim:
+        to: uim@ml.commit-email.info
       webdino:
         to:
           - webdino@ml.commit-email.info
