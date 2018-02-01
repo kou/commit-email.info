@@ -114,6 +114,9 @@ domains:
           ruby:
             to:
               - ruby@ml.commit-email.info
+          csv:
+            to:
+              - ruby-csv@ml.commit-email.info
       ruby-gnome2:
         to:
           - ruby-gnome2@ml.commit-email.info
