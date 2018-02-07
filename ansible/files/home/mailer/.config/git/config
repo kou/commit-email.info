@@ -1,0 +1,6 @@
+[core]
+  attributesfile = ~/.config/git/attributes
+
+[diff "spreadsheet"]
+  textconv = ~/bin/spreadsheet2text
+  cachetextconv = true

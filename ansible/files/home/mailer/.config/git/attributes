@@ -1,0 +1,3 @@
+*.ods diff=spreadsheet
+*.xls diff=spreadsheet
+*.xlsx diff=spreadsheet

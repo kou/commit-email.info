@@ -3,6 +3,7 @@
   vars:
     admin_user: kou
     web_hooks_receiver_user: mailer
+    web_hooks_receiver_gems_force_update: false
     github_event_watcher_user: watcher
     ruby_api_version: 2.3.0
     passenger_version: 5.1.6
@@ -47,51 +48,78 @@
 
     # Web hooks receiver
     - name: Create user for Web hooks receiver
-      user: name={{ web_hooks_receiver_user }}
+      user:
+        name: "{{ web_hooks_receiver_user }}"
     - name: Put ~{{ web_hooks_receiver_user }}/.forward
       copy:
-        content="root"
-        dest=~{{ web_hooks_receiver_user }}/.forward
-        owner={{ web_hooks_receiver_user }}
-        group={{ web_hooks_receiver_user }}
+        content: "root"
+        dest: ~{{ web_hooks_receiver_user }}/.forward
+        owner: "{{ web_hooks_receiver_user }}"
+        group: "{{ web_hooks_receiver_user }}"
     - name: Create directories
       file:
-        path=~{{ web_hooks_receiver_user }}/{{ item }}
-        state=directory
-        owner={{ web_hooks_receiver_user }}
-        group={{ web_hooks_receiver_user }}
+        path: ~{{ web_hooks_receiver_user }}/{{ item }}
+        state: directory
+        owner: "{{ web_hooks_receiver_user }}"
+        group: "{{ web_hooks_receiver_user }}"
       with_items:
+        - bin/
+        - decomposer/
+        - .config/
+        - .config/git/
         - web-hooks-receiver/
         - web-hooks-receiver/public/
         - web-hooks-receiver/tmp/
     - name: Put configuration files
       copy:
-        src=files/web-hooks-receiver/{{ item }}
-        dest=~{{ web_hooks_receiver_user }}/web-hooks-receiver/{{ item }}
-        owner={{ web_hooks_receiver_user }}
-        group={{ web_hooks_receiver_user }}
+        src: home/{{ web_hooks_receiver_user }}/{{ item }}
+        dest: ~{{ web_hooks_receiver_user }}/{{ item }}
+        owner: "{{ web_hooks_receiver_user }}"
+        group: "{{ web_hooks_receiver_user }}"
       with_items:
-        - config.yaml
-        - Gemfile
-        - Gemfile.lock
-        - config.ru
-      register: web_hooks_receiver_config_files
+        - bin/spreadsheet2text
+        - .config/git/attributes
+        - .config/git/config
+        - decomposer/Gemfile
+        - web-hooks-receiver/config.yaml
+        - web-hooks-receiver/Gemfile
+        - web-hooks-receiver/config.ru
+      register: web_hooks_receiver_files
+    - name: Make executable
+      file:
+        path: ~{{ web_hooks_receiver_user }}/bin/spreadsheet2text
+        mode: 0755
+      when: web_hooks_receiver_files.changed
     - name: Install packages for Web hooks receiver
-      apt: name={{ item }}
+      apt:
+        name: "{{ item }}"
       with_items:
         - gcc
         - make
         - ruby-dev
         - libgroonga-dev
         - libffi-dev
+    - name: Remove Gemfile.lock
+      file:
+        path: ~{{ web_hooks_receiver_user }}/{{ item }}/Gemfile.lock
+        state: absent
+      with_items:
+        - decomposer
+        - web-hooks-receiver
+      when: web_hooks_receiver_gems_force_update or
+            web_hooks_receiver_files.changed
     - name: Update gems
       become_user: "{{ web_hooks_receiver_user }}"
-      shell: bundle install --deployment --binstubs
+      shell: bundle install --binstubs --path vendor/bundle
       args:
-        chdir: ~{{ web_hooks_receiver_user }}/web-hooks-receiver/
+        chdir: ~{{ web_hooks_receiver_user }}/{{ item }}/
+      with_items:
+        - decomposer
+        - web-hooks-receiver
       notify:
         - Restart Web hooks receiver
-      when: web_hooks_receiver_config_files.changed
+      when: web_hooks_receiver_gems_force_update or
+            web_hooks_receiver_files.changed
 
     # GitHub event watcher
     - name: Create user for GitHub event watcher
