@@ -1,6 +1,10 @@
 [core]
-  attributesfile = ~/.config/git/attributes
+	attributesfile = ~/.config/git/attributes
 
 [diff "spreadsheet"]
-  textconv = ~/bin/spreadsheet2text
-  cachetextconv = true
+	textconv = ~/bin/spreadsheet2text
+	cachetextconv = true
+
+[user]
+	email = mailer@commit-email.info
+	name = commit E-mail mailer
