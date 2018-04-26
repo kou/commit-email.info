@@ -124,6 +124,8 @@ domains:
         to:
           - rwiki@ml.commit-email.info
       speee:
+        to:
+          - speee@ml.commit-email.info
         repositories:
           webapp-revieee:
             to:
