@@ -123,27 +123,28 @@
 
     # GitHub event watcher
     - name: Create user for GitHub event watcher
-      user: name={{ github_event_watcher_user }}
+      user:
+        name: "{{ github_event_watcher_user }}"
     - name: Put ~{{ github_event_watcher_user }}/.forward
       copy:
-        content="root"
-        dest=~{{ github_event_watcher_user }}/.forward
-        owner={{ github_event_watcher_user }}
-        group={{ github_event_watcher_user }}
+        content: "root"
+        dest: "~{{ github_event_watcher_user }}/.forward"
+        owner: "{{ github_event_watcher_user }}"
+        group: "{{ github_event_watcher_user }}"
     - name: Create directories
       file:
-        path=~{{ github_event_watcher_user }}/{{ item }}
-        state=directory
-        owner={{ github_event_watcher_user }}
-        group={{ github_event_watcher_user }}
+        path: "~{{ github_event_watcher_user }}/{{ item }}"
+        state: directory
+        owner: "{{ github_event_watcher_user }}"
+        group: "{{ github_event_watcher_user }}"
       with_items:
         - github-event-watcher/
     - name: Put configuration files
       copy:
-        src=files/github-event-watcher/{{ item }}
-        dest=~{{ github_event_watcher_user }}/github-event-watcher/{{ item }}
-        owner={{ github_event_watcher_user }}
-        group={{ github_event_watcher_user }}
+        src: files/github-event-watcher/{{ item }}
+        dest: "~{{ github_event_watcher_user }}/github-event-watcher/{{ item }}"
+        owner: "{{ github_event_watcher_user }}"
+        group: "{{ github_event_watcher_user }}"
       with_items:
         - config.yaml
         - Gemfile
@@ -159,12 +160,12 @@
       when: github_event_watcher_config_files.changed
     - name: Put logrotate configuraition
       template:
-        src=files/github-event-watcher/logrotate/github-event-watcher
-        dest=/etc/logrotate.d/github-event-watcher
+        src: "files/github-event-watcher/logrotate/github-event-watcher"
+        dest: "/etc/logrotate.d/github-event-watcher"
     - name: Install .service
       template:
-        src=files/github-event-watcher/github-event-watcher.service
-        dest=/lib/systemd/system/github-event-watcher.service
+        src: "files/github-event-watcher/github-event-watcher.service"
+        dest: "/lib/systemd/system/github-event-watcher.service"
       notify:
         - Reload systemd
         - Restart GitHub event watcher
