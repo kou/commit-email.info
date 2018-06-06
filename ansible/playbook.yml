@@ -141,7 +141,7 @@
         - github-event-watcher/
     - name: Put configuration files
       copy:
-        src: files/github-event-watcher/{{ item }}
+        src: /home/github-event-watcher/{{ item }}
         dest: "~{{ github_event_watcher_user }}/github-event-watcher/{{ item }}"
         owner: "{{ github_event_watcher_user }}"
         group: "{{ github_event_watcher_user }}"
@@ -160,12 +160,12 @@
       when: github_event_watcher_config_files.changed
     - name: Put logrotate configuraition
       template:
-        src: "files/github-event-watcher/logrotate/github-event-watcher"
-        dest: "/etc/logrotate.d/github-event-watcher"
+        src: etc/logrotate.d/github-event-watcher
+        dest: /etc/logrotate.d/github-event-watcher
     - name: Install .service
       template:
-        src: "files/github-event-watcher/github-event-watcher.service"
-        dest: "/lib/systemd/system/github-event-watcher.service"
+        src: lib/systemd/system/github-event-watcher.service
+        dest: /lib/systemd/system/github-event-watcher.service
       notify:
         - Reload systemd
         - Restart GitHub event watcher
