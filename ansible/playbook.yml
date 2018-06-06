@@ -141,7 +141,7 @@
         - github-event-watcher/
     - name: Put configuration files
       copy:
-        src: /home/github-event-watcher/github-event-watcher/{{ item }}
+        src: home/github-event-watcher/github-event-watcher/{{ item }}
         dest: "~{{ github_event_watcher_user }}/github-event-watcher/{{ item }}"
         owner: "{{ github_event_watcher_user }}"
         group: "{{ github_event_watcher_user }}"
