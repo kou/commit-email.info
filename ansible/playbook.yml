@@ -238,8 +238,8 @@
       apt: name=postfix
     - name: Set /etc/aliases
       template:
-        src=files/aliases
-        dest=/etc/aliases
+        src: etc/aliases
+        dest: /etc/aliases
       notify:
         - Update /etc/aliases
     - name: Set /etc/mailname
