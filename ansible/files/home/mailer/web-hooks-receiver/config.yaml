@@ -106,9 +106,6 @@ domains:
       rr:
         to:
           - rr@ml.commit-email.info
-      RubyData:
-        to:
-          - ruby-data@ml.commit-email.info
       ruby:
         repositories:
           ruby:
@@ -123,6 +120,12 @@ domains:
           rss:
             to:
               - ruby-rss@ml.commit-email.info
+      RubyData:
+        to:
+          - ruby-data@ml.commit-email.info
+      ruby-gettext:
+        to:
+          - ruby-gettext@ml.commit-email.info
       ruby-gnome2:
         to:
           - ruby-gnome2@ml.commit-email.info
