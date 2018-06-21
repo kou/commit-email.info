@@ -57,6 +57,9 @@ domains:
           commit-email.info:
             to:
               - commit-email-info@ml.commit-email.info
+      logaling:
+        to:
+          - logaling@ml.commit-email.info
       MariaDB:
         repositories:
           server:
