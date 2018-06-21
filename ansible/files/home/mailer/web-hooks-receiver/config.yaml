@@ -14,6 +14,9 @@ sleep_per_mail: 1
 domains:
   github.com: &github
     owners:
+      activeldap:
+        to:
+          - activeldap@ml.commit-email.info
       apache:
         repositories:
           arrow:
