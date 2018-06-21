@@ -43,6 +43,9 @@ domains:
             enabled: true
             to:
               - pikzie@ml.commit-email.info
+      droonga:
+        to:
+          - droonga@ml.commit-email.info
       fluent:
         to:
           - fluent@ml.commit-email.info
