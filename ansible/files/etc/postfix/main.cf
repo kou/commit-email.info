@@ -36,7 +36,7 @@ recipient_delimiter = +
 inet_interfaces = all
 
 smtpd_authorized_verp_clients =
-  $mynetowrks
+  $mynetworks
 
 milter_default_action = accept
 smtpd_milters = unix:/milter-manager/milter-manager.sock
