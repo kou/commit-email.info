@@ -271,13 +271,16 @@
       with_items:
         - milter-manager
         - milter-greylist
-    - name: Add milter-manager user to greylist group
+        - opendkim
+        - opendkim-tools
+    - name: Add milter-manager user to groups for milters
       user:
         name: milter-manager
         append: yes
         groups:
           - greylist
           - postfix
+          - opendkim
     - name: Configure milter-greylist
       copy:
         src: "{{ item }}"
@@ -287,6 +290,27 @@
         - etc/default/milter-greylist
       notify:
         - Restart milter-greylist
+    - name: Configure OpenDKIM
+      copy:
+        src: "{{ item }}"
+        dest: /{{ item }}
+      with_items:
+        - etc/opendkim.conf
+      notify:
+        - Restart OpenDKIM
+    - name: Check whether DKIM sign key exists
+      stat:
+        path: /etc/dkimkeys/default.private
+      register: dkim_sign_key
+    - name: Generate DKIM sing key
+      shell: |
+        sudo -u opendkim -H \
+          opendkim-genkey \
+            --directory /etc/dkimkeys \
+            --domain commit-email.info \
+            --selector default \
+            --subdomains
+      when: not dkim_sign_key.stat.exists
     - name: Create milter manager directory
       file:
         path: /var/spool/postfix/milter-manager/
@@ -335,6 +359,10 @@
     - name: Restart milter-greylist
       service:
         name: milter-greylist
+        state: restarted
+    - name: Restart OpenDKIM
+      service:
+        name: opendkim
         state: restarted
     - name: Restart milter manager
       service:
