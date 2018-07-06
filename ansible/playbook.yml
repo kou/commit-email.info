@@ -214,7 +214,7 @@
         - web-hooks-receiver.commit-email.info.conf
       register: apache_config_files
     - name: Put www.commit-email.info content
-      template:
+      copy:
         src: var/www/html/{{ item }}
         dest: /var/www/html/{{ item }}
       with_items:
