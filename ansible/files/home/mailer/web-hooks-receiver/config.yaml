@@ -12,6 +12,11 @@ sender: null@commit-email.info
 from: null@commit-email.info
 sleep_per_mail: 1
 domains:
+  gitlab.com:
+    owners:
+      clear-code:
+        to:
+          - clear-code@ml.commit-email.info
   github.com: &github
     owners:
       activeldap:

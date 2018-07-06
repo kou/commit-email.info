@@ -18,11 +18,11 @@ class RepositoryListUpdater
   def update
     config_path = "ansible/files/home/mailer/web-hooks-receiver/config.yaml"
     config = YAML.load(File.read(config_path))
-    owners = config["domains"]["github.com"]["owners"]
 
     html_path = "ansible/files/apache/www/index.html"
     html = File.read(html_path)
-    html = replace_table(html, owners)
+    html = replace_table(html, "gitlab.com", config)
+    html = replace_table(html, "github.com", config)
 
     File.open(html_path, "w") do |html_file|
       html_file.puts(html)
@@ -30,34 +30,37 @@ class RepositoryListUpdater
   end
 
   private
-  def replace_table(html, owners)
-    html.gsub(/^\s*<table id="repository-list">.+?<\/table>/m) do
+  def replace_table(html, fqdn, config)
+    owners = config["domains"][fqdn]["owners"]
+    host = fqdn.split(".").first
+    id_pattern = "#{Regexp.escape(host)}-repository-list"
+    html.gsub(/^\s*<table id="#{id_pattern}">.+?<\/table>/m) do
       table = <<-HEADER
-      <table id="repository-list">
-        <thead>
-          <tr>
-            <th>Owner</th>
-            <th>Repository</th>
-            <th>Mailing list</th>
-          </tr>
-        </thead>
-        <tbody>
+        <table id="#{host}-repository-list">
+          <thead>
+            <tr>
+              <th>Owner</th>
+              <th>Repository</th>
+              <th>Mailing list</th>
+            </tr>
+          </thead>
+          <tbody>
       HEADER
       owners.each do |owner, owner_configs|
-        table << format_row(owner, :all, owner_configs["to"])
+        table << format_row(fqdn, owner, :all, owner_configs["to"])
         repositories = owner_configs["repositories"] || {}
         repositories.each do |repository, repository_configs|
-          table << format_row(owner, repository, repository_configs["to"])
+          table << format_row(fqdn, owner, repository, repository_configs["to"])
         end
       end
       table << <<-FOOTER.chomp
-        </tbody>
-      </table>
+          </tbody>
+        </table>
       FOOTER
     end
   end
 
-  def format_row(owner, repository, to)
+  def format_row(fqdn, owner, repository, to)
     to = to.first if to.is_a?(Array)
     return "" if to.nil?
 
@@ -65,23 +68,23 @@ class RepositoryListUpdater
       repository_column = "(all)"
     else
       repository_column =
-        "<a href=\"#{repository_url(owner, repository)}\">#{h(repository)}</a>"
+        "<a href=\"#{repository_url(fqdn, owner, repository)}\">#{h(repository)}</a>"
     end
     <<-ROW
-          <tr>
-            <td><a href="#{owner_url(owner)}">#{h(owner)}</a></td>
-            <td>#{repository_column}</td>
-            <td>#{h(to)}</td>
-          </tr>
+            <tr>
+              <td><a href="#{owner_url(fqdn, owner)}">#{h(owner)}</a></td>
+              <td>#{repository_column}</td>
+              <td>#{h(to)}</td>
+            </tr>
     ROW
   end
 
-  def owner_url(owner)
-    "https://github.com/#{h(owner)}/"
+  def owner_url(fqdn, owner)
+    "https://#{fqdn}/#{h(owner)}/"
   end
 
-  def repository_url(owner, repository)
-    "#{owner_url(owner)}#{h(repository)}/"
+  def repository_url(fqdn, owner, repository)
+    "#{owner_url(fqdn, owner)}#{h(repository)}/"
   end
 end
 
