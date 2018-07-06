@@ -138,6 +138,9 @@ domains:
       ruby-gnome2:
         to:
           - ruby-gnome2@ml.commit-email.info
+      rurema:
+        to:
+          - rurema@ml.commit-email.info
       rwiki:
         to:
           - rwiki@ml.commit-email.info
