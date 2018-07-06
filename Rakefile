@@ -19,7 +19,7 @@ class RepositoryListUpdater
     config_path = "ansible/files/home/mailer/web-hooks-receiver/config.yaml"
     config = YAML.load(File.read(config_path))
 
-    html_path = "ansible/files/var/www/html/www/index.html"
+    html_path = "ansible/files/var/www/html/index.html"
     html = File.read(html_path)
     html = replace_table(html, "gitlab.com", config)
     html = replace_table(html, "github.com", config)
@@ -33,13 +33,19 @@ class RepositoryListUpdater
   def replace_table(html, fqdn, config)
     owners = config["domains"][fqdn]["owners"]
     host = fqdn.split(".").first
+    case fqdn
+    when "github.com"
+      owner_label = "Owner"
+    else
+      owner_label = "Group"
+    end
     id_pattern = "#{Regexp.escape(host)}-repository-list"
     html.gsub(/^\s*<table id="#{id_pattern}">.+?<\/table>/m) do
       table = <<-HEADER
         <table id="#{host}-repository-list">
           <thead>
             <tr>
-              <th>Owner</th>
+              <th>#{owner_label}</th>
               <th>Repository</th>
               <th>Mailing list</th>
             </tr>
