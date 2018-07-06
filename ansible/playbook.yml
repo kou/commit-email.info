@@ -5,6 +5,7 @@
     web_hooks_receiver_user: mailer
     web_hooks_receiver_gems_force_update: false
     github_event_watcher_user: watcher
+    github_event_watcher_gems_force_update: true
     ruby_api_version: 2.3.0
     passenger_version: 5.3.2
   tasks:
@@ -148,16 +149,22 @@
       with_items:
         - config.yaml
         - Gemfile
-        - Gemfile.lock
       register: github_event_watcher_config_files
+    - name: Remove Gemfile.lock
+      file:
+        path: "~{{github_event_watcher_user }}/github-event-watcher/Gemfile.lock"
+        state: absent
+      when: github_event_watcher_gems_force_update or
+            github_event_watcher_config_files.changed
     - name: Update gems
       become_user: "{{ github_event_watcher_user }}"
-      shell: bundle install --deployment --binstubs
+      shell: bundle install --binstubs --path vendor/bundle
       args:
         chdir: ~{{ github_event_watcher_user }}/github-event-watcher/
       notify:
         - Restart GitHub event watcher
-      when: github_event_watcher_config_files.changed
+      when: github_event_watcher_gems_force_update or
+            github_event_watcher_config_files.changed
     - name: Put logrotate configuration
       template:
         src: etc/logrotate.d/github-event-watcher
