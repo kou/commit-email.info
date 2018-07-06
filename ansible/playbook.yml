@@ -235,8 +235,8 @@
       apt: name=quickml
     - name: Put QuickML configuration
       copy:
-        src=files/quickml/quickmlrc
-        dest=/etc/quickml/quickmlrc
+        src: etc/quickml/quickmlrc
+        dest: /etc/quickml/quickmlrc
       notify:
         - Restart QuickML
 
