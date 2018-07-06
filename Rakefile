@@ -19,7 +19,7 @@ class RepositoryListUpdater
     config_path = "ansible/files/home/mailer/web-hooks-receiver/config.yaml"
     config = YAML.load(File.read(config_path))
 
-    html_path = "ansible/files/apache/www/index.html"
+    html_path = "ansible/files/var/www/html/www/index.html"
     html = File.read(html_path)
     html = replace_table(html, "gitlab.com", config)
     html = replace_table(html, "github.com", config)

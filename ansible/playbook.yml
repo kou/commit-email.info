@@ -195,8 +195,8 @@
       when: passenger.changed
     - name: Put Passenger configuration files
       template:
-        src=files/apache/{{ item }}
-        dest=/etc/apache2/mods-available/{{ item }}
+        src: etc/apache2/mods-available/{{ item }}
+        dest: /etc/apache2/mods-available/{{ item }}
       with_items:
         - passenger.conf
         - passenger.load
@@ -206,8 +206,8 @@
       when: passenger_config_files.changed
     - name: Put Apache configuration file
       template:
-        src=files/apache/{{ item }}
-        dest=/etc/apache2/sites-available/{{ item }}
+        src: etc/apache2/sites-available/{{ item }}
+        dest: /etc/apache2/sites-available/{{ item }}
       with_items:
         - 000-default.conf
         - www.commit-email.info.conf
@@ -215,8 +215,8 @@
       register: apache_config_files
     - name: Put www.commit-email.info content
       template:
-        src=files/apache/www/{{ item }}
-        dest=/var/www/html/{{ item }}
+        src: var/www/html/{{ item }}
+        dest: /var/www/html/{{ item }}
       with_items:
         - index.html
         - style.css
