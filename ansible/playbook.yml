@@ -310,13 +310,13 @@
         path: /etc/dkimkeys/default.private
       register: dkim_sign_key
     - name: Generate DKIM sing key
+      become_user: opendkim
       shell: |
-        sudo -u opendkim -H \
-          opendkim-genkey \
-            --directory /etc/dkimkeys \
-            --domain commit-email.info \
-            --selector default \
-            --subdomains
+        opendkim-genkey \
+          --directory /etc/dkimkeys \
+          --domain commit-email.info \
+          --selector default \
+          --subdomains
       when: not dkim_sign_key.stat.exists
     - name: Create milter manager directory
       file:
