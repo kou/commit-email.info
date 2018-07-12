@@ -288,6 +288,8 @@
           - greylist
           - postfix
           - opendkim
+      notify:
+        - Restart milter manager
     - name: Configure milter-greylist
       copy:
         src: "{{ item }}"
