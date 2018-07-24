@@ -96,10 +96,13 @@
         name: "{{ item }}"
       with_items:
         - gcc
+        - libffi-dev
+        - libgirepository1.0-dev
+        - libgroonga-dev
+        - libpoppler-glib-dev
+        - libreoffice
         - make
         - ruby-dev
-        - libgroonga-dev
-        - libffi-dev
     - name: Remove Gemfile.lock
       file:
         path: ~{{ web_hooks_receiver_user }}/{{ item }}/Gemfile.lock
