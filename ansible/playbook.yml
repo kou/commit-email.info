@@ -3,7 +3,7 @@
   vars:
     admin_user: kou
     web_hooks_receiver_user: mailer
-    web_hooks_receiver_gems_force_update: false
+    web_hooks_receiver_gems_force_update: true
     github_event_watcher_user: watcher
     github_event_watcher_gems_force_update: true
     ruby_api_version: 2.3.0
@@ -78,7 +78,7 @@
         owner: "{{ web_hooks_receiver_user }}"
         group: "{{ web_hooks_receiver_user }}"
       with_items:
-        - bin/spreadsheet2text
+        - bin/chupa-text
         - .config/git/attributes
         - .config/git/config
         - decomposer/Gemfile

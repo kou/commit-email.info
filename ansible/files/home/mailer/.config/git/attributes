@@ -1,3 +1,10 @@
-*.ods diff=spreadsheet
-*.xls diff=spreadsheet
-*.xlsx diff=spreadsheet
+*.odt diff=chupa-text
+*.doc diff=chupa-text
+*.docx diff=chupa-text
+*.ods diff=chupa-text
+*.xls diff=chupa-text
+*.xlsx diff=chupa-text
+*.odp diff=chupa-text
+*.ppt diff=chupa-text
+*.pptx diff=chupa-text
+*.pdf diff=chupa-text
