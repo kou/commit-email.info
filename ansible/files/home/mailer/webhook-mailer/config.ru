@@ -6,7 +6,7 @@ require "pathname"
 
 base_dir = Pathname(__FILE__).dirname
 
-require "github-web-hooks-receiver"
+require "webhook-mailer"
 
 require "racknga/middleware/exception_notifier"
 
@@ -24,4 +24,4 @@ notifier_options.merge!(options["exception_notifier"] || {})
 notifiers = [Racknga::ExceptionMailNotifier.new(notifier_options)]
 use Racknga::Middleware::ExceptionNotifier, :notifiers => notifiers
 
-run GitHubWebHooksReceiver::App.new(options)
+run WebhookMailer::App.new(options)

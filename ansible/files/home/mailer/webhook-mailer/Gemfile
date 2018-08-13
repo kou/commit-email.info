@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
 gem "git-commit-mailer", git: "https://gitlab.com/clear-code/git-commit-mailer.git"
-gem "github-web-hooks-receiver", git: "https://gitlab.com/clear-code/github-web-hooks-receiver.git"
+gem "webhook-mailer", git: "https://gitlab.com/clear-code/webhook-mailer.git"
 gem "racknga"
 gem "rack"

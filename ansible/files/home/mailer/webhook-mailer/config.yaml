@@ -1,4 +1,4 @@
-mirrors_directory: /home/mailer/web-hooks-receiver/mirrors
+mirrors_directory: /home/mailer/webhook-mailer/mirrors
 git_commit_mailer: bin/git-commit-mailer
 send_per_to: true
 add_html: true

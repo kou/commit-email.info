@@ -2,8 +2,8 @@
   become: yes
   vars:
     admin_user: kou
-    web_hooks_receiver_user: mailer
-    web_hooks_receiver_gems_force_update: true
+    webhook_mailer_user: mailer
+    webhook_mailer_gems_force_update: true
     github_event_watcher_user: watcher
     github_event_watcher_gems_force_update: true
     ruby_api_version: 2.3.0
@@ -47,51 +47,51 @@
     - name: Install Bundler
       gem: name=bundler user_install=no
 
-    # Web hooks receiver
-    - name: Create user for Web hooks receiver
+    # Webhook mailer
+    - name: Create user for Webhook mailer
       user:
-        name: "{{ web_hooks_receiver_user }}"
-    - name: Put ~{{ web_hooks_receiver_user }}/.forward
+        name: "{{ webhook_mailer_user }}"
+    - name: Put ~{{ webhook_mailer_user }}/.forward
       copy:
         content: "root"
-        dest: ~{{ web_hooks_receiver_user }}/.forward
-        owner: "{{ web_hooks_receiver_user }}"
-        group: "{{ web_hooks_receiver_user }}"
+        dest: ~{{ webhook_mailer_user }}/.forward
+        owner: "{{ webhook_mailer_user }}"
+        group: "{{ webhook_mailer_user }}"
     - name: Create directories
       file:
-        path: ~{{ web_hooks_receiver_user }}/{{ item }}
+        path: ~{{ webhook_mailer_user }}/{{ item }}
         state: directory
-        owner: "{{ web_hooks_receiver_user }}"
-        group: "{{ web_hooks_receiver_user }}"
+        owner: "{{ webhook_mailer_user }}"
+        group: "{{ webhook_mailer_user }}"
       with_items:
         - bin/
         - decomposer/
         - .config/
         - .config/git/
-        - web-hooks-receiver/
-        - web-hooks-receiver/public/
-        - web-hooks-receiver/tmp/
+        - webhook-mailer/
+        - webhook-mailer/public/
+        - webhook-mailer/tmp/
     - name: Put configuration files
       copy:
-        src: home/{{ web_hooks_receiver_user }}/{{ item }}
-        dest: ~{{ web_hooks_receiver_user }}/{{ item }}
-        owner: "{{ web_hooks_receiver_user }}"
-        group: "{{ web_hooks_receiver_user }}"
+        src: home/{{ webhook_mailer_user }}/{{ item }}
+        dest: ~{{ webhook_mailer_user }}/{{ item }}
+        owner: "{{ webhook_mailer_user }}"
+        group: "{{ webhook_mailer_user }}"
       with_items:
         - bin/chupa-text
         - .config/git/attributes
         - .config/git/config
         - decomposer/Gemfile
-        - web-hooks-receiver/config.yaml
-        - web-hooks-receiver/Gemfile
-        - web-hooks-receiver/config.ru
-      register: web_hooks_receiver_files
+        - webhook-mailer/config.yaml
+        - webhook-mailer/Gemfile
+        - webhook-mailer/config.ru
+      register: webhook_mailer_files
     - name: Make executable
       file:
-        path: ~{{ web_hooks_receiver_user }}/bin/chupa-text
+        path: ~{{ webhook_mailer_user }}/bin/chupa-text
         mode: 0755
-      when: web_hooks_receiver_files.changed
-    - name: Install packages for Web hooks receiver
+      when: webhook_mailer_files.changed
+    - name: Install packages for Webhook mailer
       apt:
         name: "{{ item }}"
       with_items:
@@ -105,25 +105,25 @@
         - ruby-dev
     - name: Remove Gemfile.lock
       file:
-        path: ~{{ web_hooks_receiver_user }}/{{ item }}/Gemfile.lock
+        path: ~{{ webhook_mailer_user }}/{{ item }}/Gemfile.lock
         state: absent
       with_items:
         - decomposer
-        - web-hooks-receiver
-      when: web_hooks_receiver_gems_force_update or
-            web_hooks_receiver_files.changed
+        - webhook-mailer
+      when: webhook_mailer_gems_force_update or
+            webhook_mailer_files.changed
     - name: Update gems
-      become_user: "{{ web_hooks_receiver_user }}"
+      become_user: "{{ webhook_mailer_user }}"
       shell: bundle install --binstubs --path vendor/bundle
       args:
-        chdir: ~{{ web_hooks_receiver_user }}/{{ item }}/
+        chdir: ~{{ webhook_mailer_user }}/{{ item }}/
       with_items:
         - decomposer
-        - web-hooks-receiver
+        - webhook-mailer
       notify:
-        - Restart Web hooks receiver
-      when: web_hooks_receiver_gems_force_update or
-            web_hooks_receiver_files.changed
+        - Restart Webhook mailer
+      when: webhook_mailer_gems_force_update or
+            webhook_mailer_files.changed
 
     # GitHub event watcher
     - name: Create user for GitHub event watcher
@@ -214,6 +214,7 @@
       with_items:
         - 000-default.conf
         - www.commit-email.info.conf
+        - webhook.commit-email.info.conf
         - web-hooks-receiver.commit-email.info.conf
       register: apache_config_files
     - name: Put www.commit-email.info content
@@ -228,6 +229,7 @@
       with_items:
         - 000-default
         - www.commit-email.info
+        - webhook.commit-email.info
         - web-hooks-receiver.commit-email.info
       notify:
         - Restart Apache
@@ -340,12 +342,12 @@
         - Restart milter manager
 
   handlers:
-    - name: Restart Web hooks receiver
+    - name: Restart Webhook mailer
       file:
-        path: /home/{{ web_hooks_receiver_user }}/web-hooks-receiver/tmp/restart.txt
+        path: /home/{{ webhook_mailer_user }}/webhook-mailer/tmp/restart.txt
         state: touch
-        owner: "{{ web_hooks_receiver_user }}"
-        group: "{{ web_hooks_receiver_user }}"
+        owner: "{{ webhook_mailer_user }}"
+        group: "{{ webhook_mailer_user }}"
     - name: Reload systemd
       command: systemctl daemon-reload
     - name: Restart GitHub event watcher
