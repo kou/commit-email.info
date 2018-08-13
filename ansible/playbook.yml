@@ -88,7 +88,7 @@
       register: web_hooks_receiver_files
     - name: Make executable
       file:
-        path: ~{{ web_hooks_receiver_user }}/bin/spreadsheet2text
+        path: ~{{ web_hooks_receiver_user }}/bin/chupa-text
         mode: 0755
       when: web_hooks_receiver_files.changed
     - name: Install packages for Web hooks receiver
