@@ -207,6 +207,12 @@
     - name: Enable Passenger
       command: a2enmod passenger
       when: passenger_config_files.changed
+    - name: Enable modules
+      command: a2enmod {{ item }}
+      with_items:
+        - ssl
+      notify:
+        - Restart Apache
     - name: Put Apache configuration file
       template:
         src: etc/apache2/sites-available/{{ item }}
@@ -234,6 +240,55 @@
       notify:
         - Restart Apache
       when: apache_config_files.changed
+
+    # Let's encrypt
+    - name: Install certbot
+      apt:
+        name: certbot
+    - name: "www: Check Let's Encrypt certificate"
+      stat:
+        path: /etc/letsencrypt/live/www.commit-email.info/fullchain.pem
+      register: www_certificate
+    - name: "webhook: Check Let's Encrypt certificate"
+      stat:
+        path: /etc/letsencrypt/live/webhook.commit-email.info/fullchain.pem
+      register: webhook_certificate
+    - name: Check Apache is installed
+      command: systemctl status apache2
+      register: apache2_installed
+      ignore_errors: yes
+    - name: "Stop Apache before initializing Let's Encrypt certificate"
+      service:
+        name: apache2
+        state: stopped
+      when: apache2_installed.rc == 0 and
+            ((not www_certificate.stat.exists) or
+             (not webhook_certificate.stat.exists))
+      notify:
+        - Restart Apache
+    - name: "www: Initialize Let's Encrypt certificate"
+      shell: |
+        certbot certonly \
+          --standalone \
+          --non-interactive \
+          --agree-tos \
+          --email webmaster@commit-email.info \
+          --domain www.commit-email.info
+      when: not www_certificate.stat.exists
+    - name: "webhook: Initialize Let's Encrypt certificate"
+      shell: |
+        certbot certonly \
+          --standalone \
+          --non-interactive \
+          --agree-tos \
+          --email webmaster@commit-email.info \
+          --domain webhook.commit-email.info
+      when: not webhook_certificate.stat.exists
+    - name: "Put Let's Encrypt update script"
+      copy:
+        src: etc/cron.daily/letsencrypt
+        dest: /etc/cron.daily/letsencrypt
+        mode: 0700
 
     # QuickML
     - name: Install QuickML
