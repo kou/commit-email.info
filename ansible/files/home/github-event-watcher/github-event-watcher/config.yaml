@@ -1,6 +1,7 @@
 repositories:
   - apache/arrow
   - apache/arrow-dist
+  - apache/arrow-testing
   - apache/spark
   - MariaDB/server
   - mruby/mruby

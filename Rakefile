@@ -16,7 +16,7 @@ class RepositoryListUpdater
   end
 
   def update
-    config_path = "ansible/files/home/mailer/web-hooks-receiver/config.yaml"
+    config_path = "ansible/files/home/mailer/webhook-mailer/config.yaml"
     config = YAML.load(File.read(config_path))
 
     html_path = "ansible/files/var/www/html/index.html"
