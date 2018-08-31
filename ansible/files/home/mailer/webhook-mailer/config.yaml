@@ -44,11 +44,11 @@ domains:
           - clear-code@ml.commit-email.info
         repositories:
           cutter:
-            enabled: true
             to:
               - cutter@ml.commit-email.info
+          lua-web-driver:
+            enabled: false
           pikzie:
-            enabled: true
             to:
               - pikzie@ml.commit-email.info
       droonga:
