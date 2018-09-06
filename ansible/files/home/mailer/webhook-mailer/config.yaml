@@ -47,7 +47,8 @@ domains:
             to:
               - cutter@ml.commit-email.info
           lua-web-driver:
-            enabled: false
+            diff:
+              enabled: false
           pikzie:
             to:
               - pikzie@ml.commit-email.info
