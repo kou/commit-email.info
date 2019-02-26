@@ -4,5 +4,6 @@ BUNDLE_GEMFILE=~/decomposer/Gemfile \
   bundle exec \
     chupa-text \
       --format=mime \
+      --mime-boundary=boundary \
       --no-need-screenshot \
       "$@"
