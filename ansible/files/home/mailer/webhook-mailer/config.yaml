@@ -17,6 +17,11 @@ domains:
       clear-code:
         to:
           - clear-code@ml.commit-email.info
+      ktou:
+        repositories:
+          www.cozmixng.org:
+            to:
+              - cozmixng@ml.commit-email.info
   github.com: &github
     owners:
       activeldap:
@@ -69,6 +74,12 @@ domains:
           commit-email.info:
             to:
               - commit-email-info@ml.commit-email.info
+          base.cozmixng.org:
+            to:
+              - cozmixng@ml.commit-email.info
+          pub.cozmixng.org:
+            to:
+              - cozmixng@ml.commit-email.info
       logaling:
         to:
           - logaling@ml.commit-email.info
