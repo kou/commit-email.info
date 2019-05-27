@@ -137,18 +137,21 @@ domains:
           - rr@ml.commit-email.info
       ruby:
         repositories:
-          ruby:
-            to:
-              - ruby@ml.commit-email.info
           csv:
             to:
               - ruby-csv@ml.commit-email.info
+          fiddle:
+            to:
+              - ruby-fiddle@ml.commit-email.info
           rexml:
             to:
               - ruby-rexml@ml.commit-email.info
           rss:
             to:
               - ruby-rss@ml.commit-email.info
+          ruby:
+            to:
+              - ruby@ml.commit-email.info
       RubyData:
         to:
           - ruby-data@ml.commit-email.info
