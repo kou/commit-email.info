@@ -150,6 +150,8 @@ domains:
             to:
               - ruby-rss@ml.commit-email.info
           ruby:
+            references:
+              - "!refs/heads/trunk"
             to:
               - ruby@ml.commit-email.info
       RubyData:
