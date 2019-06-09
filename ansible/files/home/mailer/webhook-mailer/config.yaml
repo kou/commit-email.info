@@ -155,6 +155,9 @@ domains:
               - "**/*"
             to:
               - ruby@ml.commit-email.info
+          strscan:
+            to:
+              - ruby-strscan@ml.commit-email.info
       RubyData:
         to:
           - ruby-data@ml.commit-email.info
