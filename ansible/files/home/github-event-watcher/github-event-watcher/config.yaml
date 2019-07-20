@@ -7,5 +7,7 @@ repositories:
   - mruby/mruby
   - rails/rails
   - ruby/ruby
+  - rurema/bitclust
+  - rurema/doctree
   - speee/webapp-revieee
 webhook-end-point: http://web-hooks-receiver.commit-email.info/
