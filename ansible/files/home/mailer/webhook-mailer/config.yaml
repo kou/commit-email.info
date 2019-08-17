@@ -164,9 +164,9 @@ domains:
       ruby-gettext:
         to:
           - ruby-gettext@ml.commit-email.info
-      ruby-gnome2:
+      ruby-gnome:
         to:
-          - ruby-gnome2@ml.commit-email.info
+          - ruby-gnome@ml.commit-email.info
       rurema:
         to:
           - rurema@ml.commit-email.info
