@@ -1,6 +1,6 @@
 repositories:
   - apache/arrow
-  - apache/arrow-dist
+  - apache/arrow-site
   - apache/arrow-testing
   - apache/spark
   - MariaDB/server
