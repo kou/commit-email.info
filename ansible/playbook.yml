@@ -83,6 +83,7 @@
         group: "{{ webhook_mailer_user }}"
       with_items:
         - bin/chupa-text
+        - bin/gc-mirrors.sh
         - .config/git/attributes
         - .config/git/config
         - decomposer/Gemfile
@@ -92,8 +93,11 @@
       register: webhook_mailer_files
     - name: Make executable
       file:
-        path: ~{{ webhook_mailer_user }}/bin/chupa-text
+        path: ~{{ webhook_mailer_user }}/{{ item }}
         mode: 0755
+      with_items:
+        - bin/chupa-text
+        - bin/gc-mirrors.sh
       when: webhook_mailer_files.changed
     - name: Install packages for Webhook mailer
       apt:
