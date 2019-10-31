@@ -32,7 +32,7 @@ domains:
           arrow:
             to:
               - apache-arrow@ml.commit-email.info
-          arrow-dist:
+          arrow-site:
             to:
               - apache-arrow@ml.commit-email.info
           arrow-testing:
