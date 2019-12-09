@@ -158,6 +158,9 @@ domains:
           strscan:
             to:
               - ruby-strscan@ml.commit-email.info
+          xmlrpc:
+            to:
+              - ruby-xmlrpc@ml.commit-email.info
       RubyData:
         to:
           - ruby-data@ml.commit-email.info
