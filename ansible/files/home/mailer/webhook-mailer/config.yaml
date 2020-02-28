@@ -69,6 +69,9 @@ domains:
       groonga:
         to:
           - groonga@ml.commit-email.info
+      hayamizu-lab:
+        to:
+          - hayamizu-lab@ml.commit-email.info
       kou:
         repositories:
           commit-email.info:
