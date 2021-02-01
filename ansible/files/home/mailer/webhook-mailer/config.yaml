@@ -86,11 +86,6 @@ domains:
       logaling:
         to:
           - logaling@ml.commit-email.info
-      MariaDB:
-        repositories:
-          server:
-            to:
-              - mariadb-server@ml.commit-email.info
       milter-manager:
         to:
           - milter-manager@ml.commit-email.info
