@@ -80,7 +80,7 @@ class RepositoryListUpdater
             <tr>
               <td><a href="#{owner_url(fqdn, owner)}">#{h(owner)}</a></td>
               <td>#{repository_column}</td>
-              <td>#{h(to)}</td>
+              <td><a href="mailto:#{h(to)}?cc=null@commit-email.info&amp;subject=Subscribe&amp;body=subscribe">#{h(to)}</a></td>
             </tr>
     ROW
   end
