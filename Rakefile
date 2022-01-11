@@ -75,11 +75,11 @@ class RepositoryListUpdater
       repository_column = "(all)"
     else
       repository_column =
-        "<a href=\"#{repository_url(fqdn, owner, repository)}\">#{h(repository)}</a>"
+        "<a href=\"#{h(repository_url(fqdn, owner, repository))}\">#{h(repository)}</a>"
     end
     <<-ROW
             <tr>
-              <td><a href="#{owner_url(fqdn, owner)}">#{h(owner)}</a></td>
+              <td><a href="#{h(owner_url(fqdn, owner))}">#{h(owner)}</a></td>
               <td>#{repository_column}</td>
               <td>#{h(to)}</td>
             </tr>
@@ -87,11 +87,11 @@ class RepositoryListUpdater
   end
 
   def owner_url(fqdn, owner)
-    "https://#{fqdn}/#{h(owner)}/"
+    "https://#{fqdn}/#{owner}/"
   end
 
   def repository_url(fqdn, owner, repository)
-    "#{owner_url(fqdn, owner)}#{h(repository)}/"
+    "#{owner_url(fqdn, owner)}#{repository}/"
   end
 end
 
