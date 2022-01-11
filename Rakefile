@@ -83,8 +83,8 @@ class RepositoryListUpdater
               <td><a href="#{owner_url(fqdn, owner)}">#{h(owner)}</a></td>
               <td>#{repository_column}</td>
               <td>#{h(to)}</td>
-              <td><a href="#{mailto_href_subscribe(to)}">Subscribe</a></td>
-              <td><a href="#{mailto_href_unsubscribe(to)}">Unsubscribe</a></td>
+              <td><a href="#{subscribe_url(to)}">Subscribe</a></td>
+              <td><a href="#{unsubscribe_url(to)}">Unsubscribe</a></td>
             </tr>
     ROW
   end
@@ -97,11 +97,11 @@ class RepositoryListUpdater
     "#{owner_url(fqdn, owner)}#{h(repository)}/"
   end
 
-  def mailto_href_subscribe(to)
+  def subscribe_url(to)
     "mailto:#{h(to)}?cc=null@commit-email.info&amp;subject=Subscribe&amp;body=subscribe"
   end
 
-  def mailto_href_unsubscribe(to)
+  def unsubscribe_url(to)
     "mailto:#{h(to)}?subject=Unsubscribe"
   end
 end
