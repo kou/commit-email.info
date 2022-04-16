@@ -17,11 +17,47 @@ domains:
       clear-code:
         to:
           - clear-code@ml.commit-email.info
+      redmine-daily-issue:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-delayed-job:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-description-sidebar:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-email-command:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-email-importer:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-project-journal:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-public-project-permission:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-summarized-notification:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-testcase-management:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-time-entry-change-notifier:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-work-report-exporter:
+        to:
+          - clear-code@ml.commit-email.info
       ktou:
         repositories:
           www.cozmixng.org:
             to:
               - cozmixng@ml.commit-email.info
+      windows-luajit:
+        to:
+          - clear-code@ml.commit-email.info
   github.com: &github
     owners:
       activeldap:
