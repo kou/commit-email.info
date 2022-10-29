@@ -137,7 +137,10 @@
             webhook_mailer_files.changed
     - name: Update gems
       become_user: "{{ webhook_mailer_user }}"
-      shell: bundle install --binstubs --path vendor/bundle
+      shell: |
+        bundle config bin bin/
+        bundle config path vendor/bundle
+        bundle install
       args:
         chdir: ~{{ webhook_mailer_user }}/{{ item }}/
       with_items:
@@ -184,7 +187,10 @@
             github_event_watcher_config_files.changed
     - name: Update gems
       become_user: "{{ github_event_watcher_user }}"
-      shell: bundle install --binstubs --path vendor/bundle
+      shell: |
+        bundle config bin bin
+        bundle config path vendor/bundle
+        bundle install
       args:
         chdir: ~{{ github_event_watcher_user }}/github-event-watcher/
       notify:
