@@ -6,42 +6,57 @@
     webhook_mailer_gems_force_update: true
     github_event_watcher_user: watcher
     github_event_watcher_gems_force_update: true
-    ruby_api_version: 2.5.0
-    passenger_version: 6.0.2
+    ruby_api_version: 2.7.0
+    passenger_version: 6.0.15
   tasks:
     # Base
     - name: Upgrade packages
       apt:
-        update_cache=yes
-        cache_valid_time=3600
-        upgrade=safe
+        update_cache: yes
+        cache_valid_time: 3600
+        upgrade: safe
     - name: Install base packages
-      apt: name={{ item }}
-      with_items:
-        - apt-listchanges
-        - apt-transport-https
-        - apticron
-        - vim
-        - zsh
-        - git
-        - lv
-        - acpid
-        - ruby
+      apt:
+        name:
+          - acpid
+          - apt-listchanges
+          - apt-transport-https
+          - apticron
+          - git
+          - lv
+          - ruby
+          - unattended-upgrades
+          - vim
+          - zsh
     - name: Use VIM as the default editor
       command: update-alternatives --set editor /usr/bin/vim.basic
     - name: Use e-mail for apt-listchanges
+      lineinfile:
+        path: /etc/apt/listchanges.conf
+        regexp: "^frontend="
+        line: "frontend=mail"
+    - name: Reboot automatically when package upgrade requires restart
+      lineinfile:
+        path: /etc/apt/apt.conf.d/50unattended-upgrades
+        regexp: "^(//)?Unattended-Upgrade::Automatic-Reboot "
+        line: "Unattended-Upgrade::Automatic-Reboot \"true\";"
+    - name: Send notification when packages upgraded automatically
+      lineinfile:
+        path: /etc/apt/apt.conf.d/50unattended-upgrades
+        regexp: "^(//)?Unattended-Upgrade::Mail "
+        line: "Unattended-Upgrade::Mail \"root\";"
+    - name: "sudo: NOPASSWD"
       copy:
-        src=files/listchanges.conf
-        dest=/etc/apt/listchanges.conf
-    - name: Download keyring for Groonga APT repository
-      get_url:
-        url: https://packages.groonga.org/debian/groonga-archive-keyring.gpg
-        dest: /usr/share/keyrings/groonga-archive-keyring.gpg
+        src: etc/sudoers.d/sudo-nopasswd
+        dest: /etc/sudoers.d/sudo-nopasswd
+        mode: 0400
     - name: Install Groonga APT repository
-      apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/groonga-archive-keyring.gpg] https://packages.groonga.org/debian/ buster main"
+      apt:
+        deb: https://packages.groonga.org/debian/groonga-apt-source-latest-bullseye.deb
     - name: Install Bundler
-      gem: name=bundler user_install=no
+      gem:
+        name: bundler
+        user_install: no
 
     # Set hostname
     - name: Set hostname
@@ -313,7 +328,9 @@
 
     # Postfix
     - name: Install Postfix
-      apt: name=postfix
+      apt:
+        name:
+          - postfix
     - name: Set /etc/aliases
       template:
         src: etc/aliases
@@ -322,8 +339,8 @@
         - Update /etc/aliases
     - name: Set /etc/mailname
       copy:
-        content="commit-email.info"
-        dest=/etc/mailname
+        content: "commit-email.info"
+        dest: /etc/mailname
     - name: Put Postfix configuration
       copy:
         src: "{{ item }}"
@@ -341,7 +358,7 @@
         url: https://packagecloud.io/milter-manager/repos/gpgkey
     - name: Add APT repository for milter manager
       apt_repository:
-        repo: deb https://packagecloud.io/milter-manager/repos/debian/ buster main
+        repo: deb https://packagecloud.io/milter-manager/repos/debian/ bullseye main
         filename: "milter-manager"
     - name: Install milters
       apt:
@@ -361,21 +378,46 @@
           - opendkim
       notify:
         - Restart milter manager
-    - name: Configure milter-greylist
-      copy:
-        src: "{{ item }}"
-        dest: /{{ item }}
-      with_items:
-        - etc/milter-greylist/greylist.conf
-        - etc/default/milter-greylist
+    - name: "OpenDKIM: Domain"
+      lineinfile:
+        path: /etc/opendkim.conf
+        regexp: "^#?Domain	"
+        line: "Domain	commit-emial.info"
       notify:
-        - Restart milter-greylist
-    - name: Configure OpenDKIM
-      copy:
-        src: "{{ item }}"
-        dest: /{{ item }}
-      with_items:
-        - etc/opendkim.conf
+        - Restart OpenDKIM
+    - name: "OpenDKIM: KeyFile"
+      lineinfile:
+        path: /etc/opendkim.conf
+        regexp: "^#?KeyFile	"
+        line: "KeyFile	/etc/dkimkeys/default.private"
+      notify:
+        - Restart OpenDKIM
+    - name: "OpenDKIM: Selector"
+      lineinfile:
+        path: /etc/opendkim.conf
+        regexp: "^#?Selector	"
+        line: "Selector	default"
+      notify:
+        - Restart OpenDKIM
+    - name: "OpenDKIM: Mode"
+      lineinfile:
+        path: /etc/opendkim.conf
+        regexp: "^#?Mode	"
+        line: "Mode	sv"
+      notify:
+        - Restart OpenDKIM
+    - name: "OpenDKIM: Mode"
+      lineinfile:
+        path: /etc/opendkim.conf
+        regexp: "^#?Mode	"
+        line: "Mode	s"
+      notify:
+        - Restart OpenDKIM
+    - name: "OpenDKIM: SubDomains"
+      lineinfile:
+        path: /etc/opendkim.conf
+        regexp: "^#?SubDomains	"
+        line: "SubDomains	yes"
       notify:
         - Restart OpenDKIM
     - name: Check whether DKIM sign key exists
@@ -437,10 +479,6 @@
     - name: Restart Postfix
       service:
         name: postfix
-        state: restarted
-    - name: Restart milter-greylist
-      service:
-        name: milter-greylist
         state: restarted
     - name: Restart OpenDKIM
       service:
