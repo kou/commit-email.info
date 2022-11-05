@@ -21,7 +21,6 @@
           - acpid
           - apt-listchanges
           - apt-transport-https
-          - apticron
           - git
           - lv
           - ruby
