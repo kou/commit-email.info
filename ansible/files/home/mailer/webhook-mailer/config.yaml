@@ -17,6 +17,9 @@ domains:
       clear-code:
         to:
           - clear-code@ml.commit-email.info
+      commit-email:
+        to:
+          - clear-code@ml.commit-email.info
       redmine-daily-issue:
         to:
           - clear-code@ml.commit-email.info
