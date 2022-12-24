@@ -2,6 +2,7 @@ events:
   PushEvent:
     repositories:
       - apache/arrow
+      - apache/arrow-adbc
       - apache/arrow-site
       - apache/arrow-testing
       - mruby/mruby

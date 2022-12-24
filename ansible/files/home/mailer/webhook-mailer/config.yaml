@@ -71,6 +71,9 @@ domains:
           arrow:
             to:
               - apache-arrow@ml.commit-email.info
+          arrow-adbc:
+            to:
+              - apache-arrow@ml.commit-email.info
           arrow-site:
             to:
               - apache-arrow@ml.commit-email.info
