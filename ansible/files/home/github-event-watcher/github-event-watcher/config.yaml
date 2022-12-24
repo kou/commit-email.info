@@ -4,11 +4,8 @@ events:
       - apache/arrow
       - apache/arrow-site
       - apache/arrow-testing
-      - apache/spark
       - mruby/mruby
-      - rails/rails
       - ruby/ruby
       - rurema/bitclust
       - rurema/doctree
-      - speee/webapp-revieee
     webhook-end-point: https://webhook.commit-email.info/

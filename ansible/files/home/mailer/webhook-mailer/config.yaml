@@ -77,9 +77,6 @@ domains:
           arrow-testing:
             to:
               - apache-arrow@ml.commit-email.info
-          spark:
-            to:
-              - apache-spark@ml.commit-email.info
       bm-sms:
         to:
           - bm-sms@ml.commit-email.info
@@ -152,11 +149,6 @@ domains:
         to: piroor@ml.commit-email.info
       rabbit-shocker:
         to: rabbit@ml.commit-email.info
-      rails:
-        repositories:
-          rails:
-            to:
-              - rails@ml.commit-email.info
       rake-compiler:
         to:
           - rake-compiler@ml.commit-email.info
@@ -213,13 +205,6 @@ domains:
       rwiki:
         to:
           - rwiki@ml.commit-email.info
-      speee:
-        to:
-          - speee@ml.commit-email.info
-        repositories:
-          webapp-revieee:
-            to:
-              - speee-webapp-revieee@ml.commit-email.info
       taiyaki:
         to: taiyaki@ml.commit-email.info
       test-unit:
