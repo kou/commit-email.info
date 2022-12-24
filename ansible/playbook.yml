@@ -281,6 +281,10 @@
       stat:
         path: /etc/letsencrypt/live/webhook.commit-email.info/fullchain.pem
       register: webhook_certificate
+    - name: "@: Check Let's Encrypt certificate"
+      stat:
+        path: /etc/letsencrypt/live/commit-email.info/fullchain.pem
+      register: domain_certificate
     - name: Check Apache is installed
       command: systemctl status apache2
       register: apache2_installed
@@ -291,7 +295,8 @@
         state: stopped
       when: apache2_installed.rc == 0 and
             ((not www_certificate.stat.exists) or
-             (not webhook_certificate.stat.exists))
+             (not webhook_certificate.stat.exists) or
+             (not domain_certificate.stat.exists))
       notify:
         - Restart Apache
     - name: "www: Initialize Let's Encrypt certificate"
@@ -312,6 +317,15 @@
           --email webmaster@commit-email.info \
           --domain webhook.commit-email.info
       when: not webhook_certificate.stat.exists
+    - name: "@: Initialize Let's Encrypt certificate"
+      shell: |
+        certbot certonly \
+          --standalone \
+          --non-interactive \
+          --agree-tos \
+          --email webmaster@commit-email.info \
+          --domain commit-email.info
+      when: not domain_certificate.stat.exists
     - name: "Put Let's Encrypt update script"
       copy:
         src: etc/letsencrypt/renewal-hooks/{{ item }}
@@ -319,7 +333,9 @@
         mode: 0700
       with_items:
         - pre/stop-apache2
+        - pre/stop-postfix
         - post/start-apache2
+        - post/start-postfix
 
     # QuickML
     - name: Install QuickML
