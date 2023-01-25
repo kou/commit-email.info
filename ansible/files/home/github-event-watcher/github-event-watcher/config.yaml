@@ -3,6 +3,7 @@ events:
     repositories:
       - apache/arrow
       - apache/arrow-adbc
+      - apache/arrow-flight-sql-postgresql
       - apache/arrow-site
       - apache/arrow-testing
       - mruby/mruby
