@@ -14,6 +14,9 @@ sleep_per_mail: 1
 domains:
   gitlab.com:
     owners:
+      active-evaluation-system:
+        to:
+          - clear-code@ml.commit-email.info
       clear-code:
         to:
           - clear-code@ml.commit-email.info
