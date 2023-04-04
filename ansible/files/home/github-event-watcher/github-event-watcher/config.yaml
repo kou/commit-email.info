@@ -1,13 +1,13 @@
-events:
-  PushEvent:
-    repositories:
-      - apache/arrow
-      - apache/arrow-adbc
-      - apache/arrow-flight-sql-postgresql
-      - apache/arrow-site
-      - apache/arrow-testing
-      - mruby/mruby
-      - ruby/ruby
-      - rurema/bitclust
-      - rurema/doctree
-    webhook-end-point: https://webhook.commit-email.info/
+"https://webhook.commit-email.info/":
+  events:
+    - PushEvent
+  repositories:
+    - apache/arrow
+    - apache/arrow-adbc
+    - apache/arrow-flight-sql-postgresql
+    - apache/arrow-site
+    - apache/arrow-testing
+    - mruby/mruby
+    - ruby/ruby
+    - rurema/bitclust
+    - rurema/doctree
