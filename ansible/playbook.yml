@@ -403,7 +403,7 @@
       lineinfile:
         path: /etc/opendkim.conf
         regexp: "^#?Domain	"
-        line: "Domain	commit-emial.info"
+        line: "Domain	commit-email.info"
       notify:
         - Restart OpenDKIM
     - name: "OpenDKIM: KeyFile"
