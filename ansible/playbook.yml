@@ -424,13 +424,6 @@
       lineinfile:
         path: /etc/opendkim.conf
         regexp: "^#?Mode	"
-        line: "Mode	sv"
-      notify:
-        - Restart OpenDKIM
-    - name: "OpenDKIM: Mode"
-      lineinfile:
-        path: /etc/opendkim.conf
-        regexp: "^#?Mode	"
         line: "Mode	s"
       notify:
         - Restart OpenDKIM
