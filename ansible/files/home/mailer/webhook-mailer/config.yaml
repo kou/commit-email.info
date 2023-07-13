@@ -17,6 +17,9 @@ domains:
       active-evaluation-system:
         to:
           - clear-code@ml.commit-email.info
+      apisix-plugin-mqtt-http-protocol-converter:
+        to:
+          - clear-code@ml.commit-email.info
       clear-code:
         to:
           - clear-code@ml.commit-email.info
