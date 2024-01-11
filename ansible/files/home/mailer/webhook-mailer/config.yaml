@@ -59,6 +59,9 @@ domains:
       redmine-plugin-work-report-exporter:
         to:
           - clear-code@ml.commit-email.info
+      redmine-plugin-unc:
+        to:
+          - clear-code@ml.commit-email.info
       ktou:
         repositories:
           www.cozmixng.org:
