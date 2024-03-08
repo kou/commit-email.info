@@ -62,6 +62,9 @@ domains:
       redmine-plugin-unc:
         to:
           - clear-code@ml.commit-email.info
+      redmine-knowledgebase-migrate:
+        to:
+          - clear-code@ml.commit-email.info
       ktou:
         repositories:
           www.cozmixng.org:
