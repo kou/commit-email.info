@@ -29,7 +29,7 @@ domains:
       redmine-daily-issue:
         to:
           - clear-code@ml.commit-email.info
-      redmine-knowledgebase-migrate:
+      redmine-knowledgebase-migrator:
         to:
           - clear-code@ml.commit-email.info
       redmine-plugin-delayed-job:
