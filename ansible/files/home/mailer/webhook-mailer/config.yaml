@@ -29,9 +29,6 @@ domains:
       redmine-daily-issue:
         to:
           - clear-code@ml.commit-email.info
-      redmine-knowledgebase-migrator:
-        to:
-          - clear-code@ml.commit-email.info
       redmine-plugin-delayed-job:
         to:
           - clear-code@ml.commit-email.info
@@ -57,6 +54,9 @@ domains:
         to:
           - clear-code@ml.commit-email.info
       redmine-plugin-time-entry-change-notifier:
+        to:
+          - clear-code@ml.commit-email.info
+      redmine-plugin-wiki-article:
         to:
           - clear-code@ml.commit-email.info
       redmine-plugin-work-report-exporter:
