@@ -51,6 +51,7 @@
       gem:
         name: bundler
         user_install: no
+        state: latest
 
     # Set hostname
     - name: Set hostname
