@@ -10,11 +10,6 @@
     passenger_version: 6.0.23
   tasks:
     # Base
-    - name: Upgrade packages
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
-        upgrade: safe
     - name: Install base packages
       apt:
         name:
