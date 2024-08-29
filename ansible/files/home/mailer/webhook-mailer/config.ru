@@ -18,7 +18,7 @@ use Rack::Runtime
 use Rack::ContentLength
 
 config_file = base_dir + "config.yaml"
-options = YAML.load_file(config_file.to_s)
+options = YAML.safe_load_file(config_file.to_s, aliases: true)
 notifier_options = options.dup
 if options["error_to"]
   notifier_options["to"] = options["error_to"]
