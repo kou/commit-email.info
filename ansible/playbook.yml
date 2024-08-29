@@ -6,8 +6,8 @@
     webhook_mailer_gems_force_update: true
     github_event_watcher_user: watcher
     github_event_watcher_gems_force_update: true
-    ruby_api_version: 2.7.0
-    passenger_version: 6.0.15
+    ruby_api_version: 3.1.0
+    passenger_version: 6.0.23
   tasks:
     # Base
     - name: Upgrade packages
@@ -51,7 +51,7 @@
         mode: 0400
     - name: Install Groonga APT repository
       apt:
-        deb: https://packages.groonga.org/debian/groonga-apt-source-latest-bullseye.deb
+        deb: https://packages.groonga.org/debian/groonga-apt-source-latest-bookworm.deb
     - name: Install Bundler
       gem:
         name: bundler
@@ -379,7 +379,7 @@
         url: https://packagecloud.io/milter-manager/repos/gpgkey
     - name: Add APT repository for milter manager
       apt_repository:
-        repo: deb https://packagecloud.io/milter-manager/repos/debian/ bullseye main
+        repo: deb https://packagecloud.io/milter-manager/repos/debian/ bookworm main
         filename: "milter-manager"
     - name: Install milters
       apt:
