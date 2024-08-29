@@ -47,6 +47,9 @@ domains:
       redmine-plugin-public-project-permission:
         to:
           - clear-code@ml.commit-email.info
+      redmine-plugin-remote-user-auth:
+        to:
+          - clear-code@ml.commit-email.info
       redmine-plugin-summarized-notification:
         to:
           - clear-code@ml.commit-email.info
