@@ -215,7 +215,11 @@
         - libcurl4-openssl-dev
         - libssl-dev
     - name: Install Passenger
-      gem: name=passenger version={{ passenger_version }} user_install=no
+      gem:
+        name: passenger
+        version: "{{ passenger_version }}"
+        force: yes
+        user_install: no
       register: passenger
     - name: Build Passenger
       command: passenger-install-apache2-module --languages ruby --auto
