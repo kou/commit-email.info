@@ -1,8 +1,11 @@
 # -*- mode: ruby -*-
 
+require "pathname"
 require "yaml"
 
-require "pathname"
+require "rack/common_logger"
+require "rack/content_length"
+require "rack/runtime"
 
 base_dir = Pathname(__FILE__).dirname
 
