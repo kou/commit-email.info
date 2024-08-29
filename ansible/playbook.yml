@@ -47,11 +47,14 @@
     - name: Install Groonga APT repository
       apt:
         deb: https://packages.groonga.org/debian/groonga-apt-source-latest-bookworm.deb
-    - name: Install Bundler
+    - name: Install Bundler and default gems
       gem:
-        name: bundler
+        name: "{{ item }}"
         user_install: no
         state: latest
+      with_items:
+        - base64
+        - bundler
 
     # Set hostname
     - name: Set hostname
