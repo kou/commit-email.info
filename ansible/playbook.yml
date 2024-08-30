@@ -377,12 +377,13 @@
         - Restart Postfix
 
     # milter manager
-    - name: Add GPG key for APT repository
-      apt_key:
-        url: https://packagecloud.io/milter-manager/repos/gpgkey
+    # - name: Add GPG key for APT repository
+    #   apt_key:
+    #     url: https://packagecloud.io/milter-manager/repos/gpgkey
     - name: Add APT repository for milter manager
       apt_repository:
-        repo: deb https://packagecloud.io/milter-manager/repos/debian/ bookworm main
+        repo: |
+          deb [signed-by=/etc/apt/keyrings/milter-manager_repos-archive-keyring.gpg] https://packagecloud.io/milter-manager/repos/debian/ bookworm main
         filename: "milter-manager"
     - name: Install milters
       apt:
