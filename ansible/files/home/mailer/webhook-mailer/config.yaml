@@ -29,6 +29,9 @@ domains:
       redmine-daily-issue:
         to:
           - clear-code@ml.commit-email.info
+      redmine-plugin-auth-remote-user:
+        to:
+          - clear-code@ml.commit-email.info
       redmine-plugin-delayed-job:
         to:
           - clear-code@ml.commit-email.info
@@ -45,9 +48,6 @@ domains:
         to:
           - clear-code@ml.commit-email.info
       redmine-plugin-public-project-permission:
-        to:
-          - clear-code@ml.commit-email.info
-      redmine-plugin-remote-user-auth:
         to:
           - clear-code@ml.commit-email.info
       redmine-plugin-summarized-notification:
