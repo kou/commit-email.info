@@ -39,6 +39,12 @@
         path: /etc/apt/apt.conf.d/50unattended-upgrades
         regexp: "^(//)?Unattended-Upgrade::Mail "
         line: "Unattended-Upgrade::Mail \"root\";"
+    - name: Update Groonga repository automatically
+      lineinfile:
+        path: /etc/apt/apt.conf.d/50unattended-upgrades
+        insertafter: "Unattended-Upgrade::Origins-Pattern"
+        regexp: "^        \"origin=The Groonga Project"
+        line: "        \"origin=The Groonga Project,codename=${distro_codename},label=The Groonga Project\";"
     - name: "sudo: NOPASSWD"
       copy:
         src: etc/sudoers.d/sudo-nopasswd
