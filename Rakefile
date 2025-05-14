@@ -1,11 +1,56 @@
+# -*- ruby -*-
+
 require "rake"
 require "yaml"
 require "erb"
 
+def retrieve_env_var(name, default=nil)
+  value = ENV[name] || default
+  raise "Environment variable <#{name}> must be set" if value.nil?
+  value
+end
+
+user = retrieve_env_var("ANSIBLE_GPG_USER", ENV["USER"])
+file "ansible/password" => "ansible/password.#{user}.asc" do |task|
+  sh("gpg",
+     "--output", task.name,
+     "--decrypt", task.prerequisites.first)
+  chmod(0600, task.name)
+end
+
+namespace :password do
+  desc "Generate encrypted ansible/password"
+  task :encrypt => "ansible/password" do
+    user = retrieve_env_var("ANSIBLE_ENCRYPT_GPG_USER")
+    key = retrieve_env_var("ANSIBLE_ENCRYPT_GPG_KEY")
+    sh("gpg",
+       "--armor",
+       "--encrypt",
+       "--output", "ansible/password.#{user}.asc",
+       "--recipient", key,
+       "ansible/password")
+  end
+end
+
+encrypted_files = [
+  "ansible/vars/private.yml",
+]
+encrypted_files.each do |encrypted_file|
+  desc "Edit #{encrypted_file}"
+  task File.basename(encrypted_file) => "ansible/password" do |task|
+    sh("ansible-vault",
+       "edit",
+       "--vault-password-file", "ansible/password",
+       encrypted_file)
+  end
+end
+
 desc "Apply the Ansible configurations"
-task :deploy do
+task :deploy => "ansible/password" do
   sh("ansible-playbook",
-     "--inventory-file", "hosts",
+     "--inventory", "hosts",
+     "--user", ENV["ANSIBLE_USER"] || ENV["USER"],
+     "--vault-password-file", "ansible/password",
      "ansible/playbook.yml")
 end
 

@@ -2,12 +2,15 @@
   become: yes
   vars:
     admin_user: kou
-    webhook_mailer_user: mailer
-    webhook_mailer_gems_force_update: true
-    github_event_watcher_user: watcher
+    crossbow_user: crossbow
     github_event_watcher_gems_force_update: true
-    ruby_api_version: 3.1.0
+    github_event_watcher_user: watcher
     passenger_version: 6.0.23
+    ruby_api_version: 3.1.0
+    webhook_mailer_gems_force_update: true
+    webhook_mailer_user: mailer
+  vars_files:
+    - vars/private.yml
   tasks:
     # Base
     - name: Install base packages
@@ -213,6 +216,18 @@
         - Reload systemd
         - Restart GitHub event watcher
 
+    # Crossbow
+    - name: Create user for Crossbow
+      user:
+        name: "{{ crossbow_user }}"
+        password: "{{ passwords.crossbow | password_hash('sha512') }}"
+    - name: Put ~{{ crossbow_user }}/.forward
+      copy:
+        content: "root"
+        dest: "~{{ crossbow_user }}/.forward"
+        owner: "{{ crossbow_user }}"
+        group: "{{ crossbow_user }}"
+
     # Apache
     - name: Install Apache and related packages
       apt: name={{ item }}
@@ -359,8 +374,10 @@
     # Postfix
     - name: Install Postfix
       apt:
-        name:
-          - postfix
+        name: "{{ item }}"
+      with_items:
+        - dovecot-core
+        - postfix
     - name: Set /etc/aliases
       template:
         src: etc/aliases
@@ -371,13 +388,22 @@
       copy:
         content: "commit-email.info"
         dest: /etc/mailname
-    - name: Put Postfix configuration
+    - name: Put Dovecot configurations
+      copy:
+        src: "{{ item }}"
+        dest: /{{ item }}
+      with_items:
+        - etc/dovecot/local.conf
+      notify:
+        - Restart Dovecot
+    - name: Put Postfix configurations
       copy:
         src: "{{ item }}"
         dest: /{{ item }}
       with_items:
         - etc/postfix/transport_maps
         - etc/postfix/main.cf
+        - etc/postfix/master.cf
       notify:
         - Update /etc/postfix/transport_maps
         - Restart Postfix
@@ -500,6 +526,10 @@
       command: postalias /etc/aliases
     - name: Update /etc/postfix/transport_maps
       command: postmap /etc/postfix/transport_maps
+    - name: Restart Dovecot
+      service:
+        name: dovecot
+        state: restarted
     - name: Restart Postfix
       service:
         name: postfix
