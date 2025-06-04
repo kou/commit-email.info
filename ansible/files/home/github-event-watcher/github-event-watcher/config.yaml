@@ -5,7 +5,9 @@
     - apache/arrow
     - apache/arrow-adbc
     - apache/arrow-flight-sql-postgresql
+    - apache/arrow-js
     - apache/arrow-site
+    - apache/arrow-swift
     - apache/arrow-testing
     - mruby/mruby
     - ruby/ruby

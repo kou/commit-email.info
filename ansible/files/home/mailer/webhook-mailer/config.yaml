@@ -92,7 +92,13 @@ domains:
           arrow-flight-sql-postgresql:
             to:
               - apache-arrow@ml.commit-email.info
+          arrow-js:
+            to:
+              - apache-arrow@ml.commit-email.info
           arrow-site:
+            to:
+              - apache-arrow@ml.commit-email.info
+          arrow-swift:
             to:
               - apache-arrow@ml.commit-email.info
           arrow-testing:
