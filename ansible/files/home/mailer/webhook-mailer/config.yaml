@@ -155,6 +155,10 @@ domains:
       mroonga:
         to:
           - mroonga@ml.commit-email.info
+        repositories:
+          mariadb-server:
+            to:
+              - mroonga-mariadb@ml.commit-email.info
       mruby:
         repositories:
           mruby:
