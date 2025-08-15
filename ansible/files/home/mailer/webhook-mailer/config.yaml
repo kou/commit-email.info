@@ -89,6 +89,9 @@ domains:
           arrow-adbc:
             to:
               - apache-arrow@ml.commit-email.info
+          arrow-dotnet:
+            to:
+              - apache-arrow@ml.commit-email.info
           arrow-flight-sql-postgresql:
             to:
               - apache-arrow@ml.commit-email.info
@@ -96,6 +99,9 @@ domains:
             to:
               - apache-arrow@ml.commit-email.info
           arrow-site:
+            to:
+              - apache-arrow@ml.commit-email.info
+          arrow-skyhook:
             to:
               - apache-arrow@ml.commit-email.info
           arrow-swift:
