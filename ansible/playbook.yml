@@ -2,6 +2,7 @@
   become: yes
   vars:
     admin_user: kou
+    arrow_user: arrow
     crossbow_user: crossbow
     github_event_watcher_gems_force_update: true
     github_event_watcher_user: watcher
@@ -215,6 +216,19 @@
       notify:
         - Reload systemd
         - Restart GitHub event watcher
+
+    # Arrow
+    - name: Create user for Arrow
+      user:
+        name: "{{ arrow_user }}"
+        password: "{{ passwords.arrow | password_hash('sha512') }}"
+        shell: /usr/sbin/nologin
+    - name: Put ~{{ crossbow_user }}/.forward
+      copy:
+        content: "root"
+        dest: "~{{ arrow_user }}/.forward"
+        owner: "{{ arrow_user }}"
+        group: "{{ arrow_user }}"
 
     # Crossbow
     - name: Create user for Crossbow
