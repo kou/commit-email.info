@@ -223,7 +223,7 @@
         name: "{{ arrow_user }}"
         password: "{{ passwords.arrow | password_hash('sha512') }}"
         shell: /usr/sbin/nologin
-    - name: Put ~{{ crossbow_user }}/.forward
+    - name: Put ~{{ arrow_user }}/.forward
       copy:
         content: "root"
         dest: "~{{ arrow_user }}/.forward"
